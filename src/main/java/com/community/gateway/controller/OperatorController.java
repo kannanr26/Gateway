@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.community.gateway.dto.OperatorDTO;
 import com.community.gateway.logical.OperatorLogical;
 
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("/gateway")
 public class OperatorController {

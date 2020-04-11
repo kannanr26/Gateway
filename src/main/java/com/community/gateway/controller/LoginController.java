@@ -23,7 +23,7 @@ import com.community.gateway.jwt.config.UserDetailsImpl;
 import com.community.gateway.jwt.response.JWTResponse;
 import com.community.gateway.logical.OperatorLogical;
 
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("/gateway")
 public class LoginController {

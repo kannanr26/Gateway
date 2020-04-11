@@ -37,10 +37,15 @@ public class Family_Details {
 	
 	 
 	@OneToMany(mappedBy = "familyDetails", cascade = CascadeType.ALL, orphanRemoval = true)
-	    private List<Person> person;
+	 private List<Person> person;
 
-	private int kalam;
-	private int gothiram;
+	 @OneToOne(cascade = CascadeType.ALL)
+	 @JoinColumn
+	 private Kulam kulam;
+	
+	 @OneToOne(cascade = CascadeType.ALL)
+	 @JoinColumn
+	private Gothiram gothiram;
 	
 	
 }
