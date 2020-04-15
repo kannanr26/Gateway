@@ -12,6 +12,8 @@ public interface EducationLogical {
 	List<EducationDTO> findAll();
 
 	EducationDTO findById(Long educationId)throws ResourceNotFoundException;
+	
+	EducationDTO findByEducationName(String education)throws ResourceNotFoundException;
 
 	//EducationDTO save(@Valid Education educationDTO);
 

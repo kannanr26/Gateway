@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import com.community.gateway.dto.PersonDTO;
 import com.community.gateway.exception.ResourceNotFoundException;
+import com.community.gateway.jwt.response.MessageResponse;
 
 public interface PersonLogical {
 
@@ -17,6 +18,6 @@ public interface PersonLogical {
 
 	void delete(Long personId) throws ResourceNotFoundException;
 
-	PersonDTO save(@Valid PersonDTO personDto);
+	PersonDTO save(@Valid PersonDTO personDto, Long groupId) throws Exception;
 
 }

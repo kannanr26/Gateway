@@ -32,9 +32,13 @@ public class JobTitleLogicalImpl implements JobTitleLogical {
 	public JobTitleDTO findById(Long jobtitleId) throws ResourceNotFoundException {
 		return jobtitleMapper.toJobTitleDTO(jobtitleService.findById(jobtitleId));
 	}
+	@Override
+	public JobTitleDTO findByRoleName(String roleName) throws ResourceNotFoundException {
+		return jobtitleMapper.toJobTitleDTO(jobtitleService.findByRoleName(roleName));
+	}
 
 	@Override
-	public JobTitleDTO save(@Valid JobTitleDTO jobtitleDto) {
+	public JobTitleDTO save(@Valid JobTitleDTO jobtitleDto) throws ResourceNotFoundException {
 		// TODO Auto-generated method stub
 		return jobtitleMapper.toJobTitleDTO(jobtitleService.save(jobtitleMapper.toJobTitle(jobtitleDto)));
 		

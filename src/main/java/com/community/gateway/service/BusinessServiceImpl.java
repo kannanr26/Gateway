@@ -26,6 +26,14 @@ public class BusinessServiceImpl implements BusinessService {
 				.orElseThrow(() -> new ResourceNotFoundException("Operator not found for this id :: " + businessId));
 		return business;
 	}
+	@Override
+	public Business findByBusinessName(String  businessName) throws ResourceNotFoundException {
+		// TODO Auto-generated method stub
+
+		Business business = businessRepository.findByBusinessName(businessName)
+				.orElseThrow(() -> new ResourceNotFoundException("Business name not found for this id :: " + businessName));
+		return business;
+	}
 
 	@Override
 	public List<Business> findAll() {

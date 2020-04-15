@@ -15,5 +15,5 @@ public interface PersonService {
 
 	void delete(Long personId);
 
-	Person save(@Valid Person person);
+	Person save(@Valid Person person) throws Exception;
 }

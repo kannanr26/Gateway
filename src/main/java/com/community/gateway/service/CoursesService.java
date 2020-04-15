@@ -14,5 +14,7 @@ public interface CoursesService {
 
 	void delete(Long coursesId);
 
-	Courses save(@Valid Courses courses);
+	Courses save(@Valid Courses courses)throws ResourceNotFoundException;
+
+	Courses findByCourseName(String courseName)throws ResourceNotFoundException;
 }

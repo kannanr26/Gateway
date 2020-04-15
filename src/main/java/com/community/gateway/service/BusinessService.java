@@ -16,4 +16,6 @@ public interface BusinessService {
 	void delete(Long businessId);
 
 	Business save(@Valid Business business);
+
+	Business findByBusinessName(String businessName) throws ResourceNotFoundException;
 }

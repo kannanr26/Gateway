@@ -44,7 +44,7 @@ public class Family_DetailsServiceImpl implements Family_DetailsService {
 	}
 
 	@Override
-	public Family_Details save(@Valid Family_Details family_details) {
+	public Family_Details save(@Valid Family_Details family_details)throws Exception {
 		// TODO Auto-generated method stub
 		return family_detailsRepository.save(family_details);
 	}

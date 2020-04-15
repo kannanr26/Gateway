@@ -17,6 +17,8 @@ public interface JobTitleLogical {
 
 	void delete(Long jobtitleId) throws ResourceNotFoundException;
 
-	JobTitleDTO save(@Valid JobTitleDTO jobtitleDto);
+	JobTitleDTO save(@Valid JobTitleDTO jobtitleDto) throws ResourceNotFoundException;
+
+	JobTitleDTO findByRoleName(String roleName)  throws ResourceNotFoundException;
 
 }

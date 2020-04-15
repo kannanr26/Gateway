@@ -19,6 +19,6 @@ public class Business {
 	@Column(name = "BUSINESSID", nullable = false)
 	private long id;
 	@Column(name = "BUSINESSName", unique = true, nullable = false)
-	private String BusinessName;
+	private String businessName;
 
 }

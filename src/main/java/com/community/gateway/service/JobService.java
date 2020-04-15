@@ -16,4 +16,6 @@ public interface JobService {
 	void delete(Long jobId);
 
 	Job save(@Valid Job job);
+
+	Job findByRoleName(String roleName) throws ResourceNotFoundException;
 }
