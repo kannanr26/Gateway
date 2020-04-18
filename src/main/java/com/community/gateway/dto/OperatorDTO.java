@@ -9,43 +9,53 @@ public class OperatorDTO {
 	private String operatorName;
 	@JsonIgnore
 	private String password;
-	private int mobileNumber;
-	
-	
-private ERole role;
-private java.util.Date createdTimestamp;
+	private long mobileNumber;
+
+	private ERole role;
+	private java.util.Date createdTimestamp;
+
 	public long getId() {
 		return id;
 	}
+
 	public void setId(long id) {
 		this.id = id;
 	}
+
 	public String getOperatorName() {
 		return operatorName;
 	}
+
 	public void setOperatorName(String operatorName) {
 		this.operatorName = operatorName;
 	}
+
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public int getMobileNumber() {
+
+	public long getMobileNumber() {
 		return mobileNumber;
 	}
-	public void setMobileNumber(int mobileNumber) {
+
+	public void setMobileNumber(long mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
-	
+
 	private Operator_DetailsDTO operator_Details;
+
 	public Operator_DetailsDTO getOperator_Details() {
 		return operator_Details;
 	}
+
 	public void setOperator_Details(Operator_DetailsDTO operator_Details) {
 		this.operator_Details = operator_Details;
 	}
+
 	public java.util.Date getCreatedTimestamp() {
 		return createdTimestamp;
 	}
@@ -53,6 +63,7 @@ private java.util.Date createdTimestamp;
 	public void setCreatedTimestamp(java.util.Date createdTimestamp) {
 		this.createdTimestamp = createdTimestamp;
 	}
+
 	public ERole getRole() {
 		return role;
 	}

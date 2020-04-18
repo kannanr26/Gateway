@@ -20,11 +20,10 @@ import lombok.Data;
 //@Service
 public class FamilyUtil {
 
-	public FamilyUtil() {
-		FamilyUtil.gothirams = getGothirams();
-		FamilyUtil.kulams = getKulams();
-		FamilyUtil.deitys = getDeitys();
-	}
+	/*
+	 * public FamilyUtil() { FamilyUtil.gothirams = getGothirams();
+	 * FamilyUtil.kulams = getKulams(); FamilyUtil.deitys = getDeitys(); }
+	 */
 
 	@Autowired
 	private static GothiramLogical gothiramLocial;
@@ -42,7 +41,7 @@ public class FamilyUtil {
 	//private static List<>
 	public static List<GothiramDTO> getGothirams() {
 		if (FamilyUtil.gothirams == null || FamilyUtil.gothirams.isEmpty()) {
-			return gothiramLocial.findAll();
+			FamilyUtil.gothirams=gothiramLocial.findAll();
 		}
 		return FamilyUtil.gothirams;
 	}
@@ -58,7 +57,7 @@ public class FamilyUtil {
 
 	public static List<KulamDTO> getKulams() {
 		if (FamilyUtil.kulams == null || FamilyUtil.kulams.isEmpty()) {
-			return kulamLocial.findAll();
+			FamilyUtil.kulams= kulamLocial.findAll();
 		}
 		return FamilyUtil.kulams;
 	}
@@ -75,7 +74,7 @@ public class FamilyUtil {
 
 	public static List<DeityDTO> getDeitys() {
 		if (FamilyUtil.deitys == null || FamilyUtil.deitys.isEmpty()) {
-			return deityLocial.findAll();
+			FamilyUtil.deitys= deityLocial.findAll();
 		}
 		return FamilyUtil.deitys;
 	}

@@ -5,11 +5,11 @@ public class JWTResponse {
 	private String type = "GateWay";
 	private Long id;
 	private String username;
-	private int mobileNumber;
+	private long mobileNumber;
 	private String roles;
 	private String msg;
 
-	public JWTResponse(String accessToken, Long id, String username, int mobileNumber, String roles, String msg) {
+	public JWTResponse(String accessToken, Long id, String username, long mobileNumber, String roles, String msg) {
 		this.token = accessToken;
 		this.id = id;
 		this.username = username;
@@ -23,11 +23,11 @@ public class JWTResponse {
 		this.msg=msg;
 	}
 
-	public int getMobileNumber() {
+	public long getMobileNumber() {
 		return mobileNumber;
 	}
 
-	public void setMobileNumber(int mobileNumber) {
+	public void setMobileNumber(long mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
 

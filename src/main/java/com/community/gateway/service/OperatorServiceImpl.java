@@ -56,7 +56,7 @@ public class OperatorServiceImpl implements OperatorService {
 	}
 
 	@Override
-	public Operator findByMobileNumber(int mobileNumber) throws ResourceNotFoundException {
+	public Operator findByMobileNumber(long mobileNumber) throws ResourceNotFoundException {
 		Operator operator = operatorRepository.findByMobileNumber(mobileNumber)
 				.orElseThrow(() -> new ResourceNotFoundException("Operator not found for this mobileNumber :: " + mobileNumber));
 		return operator;

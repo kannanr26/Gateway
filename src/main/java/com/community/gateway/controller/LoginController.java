@@ -25,13 +25,15 @@ import com.community.gateway.logical.OperatorLogical;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
-@RequestMapping("/gateway")
+@RequestMapping("/gw")
 public class LoginController {
 
 	@Autowired
 	private OperatorLogical loginL;
+
 	@Autowired
 	AuthenticationManager authenticationManager;
+	
 	@Autowired
 	JwtUtils jwtUtils;
 
@@ -40,13 +42,14 @@ public class LoginController {
 
 		OperatorDTO operator = null;
 		String jwt = null;
-		String role = null ;
+		String role = null;
 		try {
-			operator = loginL.findByMobile(operatorRequest.getMobileNumber());
+			operator = loginL.findByMobileNumber(operatorRequest.getMobileNumber());
 
 			System.out.println(
 					" Operator login :" + operatorRequest.getMobileNumber() + "  ::: " + operatorRequest.getPassword());
 			if (operatorRequest.getPassword().equals(operator.getPassword())) {
+
 				Authentication authentication = authenticationManager
 						.authenticate(new UsernamePasswordAuthenticationToken(
 								operator.getOperator_Details().getOperatorName() + "-" + operator.getMobileNumber(),
@@ -56,22 +59,23 @@ public class LoginController {
 
 				jwt = jwtUtils.generateJwtToken(authentication);
 				UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-				List<String>roles= userDetails.getAuthorities().stream().map(item -> item.getAuthority())
+				List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
 						.collect(Collectors.toList());
-				role=roles.get(0);
+				role = roles.get(0);
+
+				return ResponseEntity.ok(new JWTResponse(jwt, operator.getId(),
+						operator.getOperator_Details().getOperatorName(), operator.getMobileNumber(), role, "Success"));
+
 			}
 		} catch (com.community.gateway.exception.ResourceNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("Login Error Operator Not found");
-			return ResponseEntity
-					.badRequest()
-					.body(new JWTResponse("Error: Login failed"));
-			
+			return ResponseEntity.badRequest().body(new JWTResponse("Error: Login failed"));
+
 		}
 
-		return ResponseEntity.ok(
-				new JWTResponse(jwt, operator.getId(), operator.getOperator_Details().getOperatorName(), operator.getMobileNumber(), role,"Success"));
-			}
+		return ResponseEntity.badRequest().body(new JWTResponse("Error: Login failed"));
+	}
 
 }

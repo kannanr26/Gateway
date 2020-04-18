@@ -10,7 +10,7 @@ import com.community.gateway.model.Operator;
 @Repository
 public interface OperatorRepository extends CrudRepository<Operator, Long> {
 
-	Optional<Operator> findByMobileNumber(int mobileNumber);
+	Optional<Operator> findByMobileNumber(long mobileNumber);
 	
 	
 	
