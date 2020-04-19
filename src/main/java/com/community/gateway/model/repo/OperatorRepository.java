@@ -1,18 +1,12 @@
 package com.community.gateway.model.repo;
 
-import java.util.Optional;
-
+import com.community.gateway.model.Operator;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.community.gateway.model.Operator;
+import java.util.Optional;
 
 @Repository
 public interface OperatorRepository extends CrudRepository<Operator, Long> {
-
-	Optional<Operator> findByMobileNumber(int mobileNumber);
-	
-	
-	
-	
+    Optional<Operator> findByMobileNumber(String mobileNumber);
 }

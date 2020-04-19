@@ -20,9 +20,9 @@ import lombok.Data;
 public class FamilyUtil {
 
 	public FamilyUtil() {
-		FamilyUtil.gothirams = getGothirams();
-		FamilyUtil.kulams = getKulams();
-		FamilyUtil.deitys = getDeitys();
+//		FamilyUtil.gothirams = getGothirams();
+//		FamilyUtil.kulams = getKulams();
+//		FamilyUtil.deitys = getDeitys();
 	}
 
 	@Autowired

@@ -17,6 +17,6 @@ public interface OperatorService{
 
 	Operator save(@Valid Operator operator);
 
-	Operator findByMobileNumber(int mobileNumber) throws ResourceNotFoundException;
+	Operator findByMobileNumber(String mobileNumber) throws ResourceNotFoundException;
 
 }

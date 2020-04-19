@@ -21,7 +21,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	public UserDetails loadUserByUsername(String mobileNumber) throws UsernameNotFoundException {
 		OperatorDTO user = null;
 		try {
-			user = operatorLogical.findByMobile(Integer.parseInt(mobileNumber));
+			user = operatorLogical.findByMobile(mobileNumber);
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			 new UsernameNotFoundException("User Not Found with  mobileNumber : " + mobileNumber);
