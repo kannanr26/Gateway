@@ -7,12 +7,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class OperatorDTO {
 	private long id;
 	private String operatorName;
-	@JsonIgnore
 	private String password;
 	private long mobileNumber;
 
 	private ERole role;
-	private java.util.Date createdTimestamp;
+	//private java.util.Date createdTimestamp;
 
 	public long getId() {
 		return id;
@@ -46,23 +45,14 @@ public class OperatorDTO {
 		this.mobileNumber = mobileNumber;
 	}
 
-	private Operator_DetailsDTO operator_Details;
-
-	public Operator_DetailsDTO getOperator_Details() {
-		return operator_Details;
-	}
-
-	public void setOperator_Details(Operator_DetailsDTO operator_Details) {
-		this.operator_Details = operator_Details;
-	}
-
-	public java.util.Date getCreatedTimestamp() {
-		return createdTimestamp;
-	}
-
-	public void setCreatedTimestamp(java.util.Date createdTimestamp) {
-		this.createdTimestamp = createdTimestamp;
-	}
+	/*
+	 * private Operator_DetailsDTO operator_Details;
+	 * 
+	 * public Operator_DetailsDTO getOperator_Details() { return operator_Details; }
+	 * 
+	 * public void setOperator_Details(Operator_DetailsDTO operator_Details) {
+	 * this.operator_Details = operator_Details; }
+	 */
 
 	public ERole getRole() {
 		return role;

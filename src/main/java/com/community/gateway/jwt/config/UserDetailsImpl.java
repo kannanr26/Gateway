@@ -42,9 +42,9 @@ public class UserDetailsImpl implements UserDetails {
 	public static UserDetailsImpl build(OperatorDTO operator) {
 
 		List<GrantedAuthority> authorities= new ArrayList();
-		authorities.add(new SimpleGrantedAuthority(operator.getOperator_Details().getRole().name()));
+		authorities.add(new SimpleGrantedAuthority(operator.getRole().name()));
 
-		return new UserDetailsImpl(operator.getId(), operator.getOperator_Details().getOperatorName(),
+		return new UserDetailsImpl(operator.getId(), operator.getOperatorName(),
 				operator.getMobileNumber(), operator.getPassword(), authorities);
 	}
 

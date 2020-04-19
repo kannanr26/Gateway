@@ -56,6 +56,10 @@ public class UtilityController {
 	public MessageResponse addCity(@Valid @RequestBody CityDTO city) {
 		return AddressUtil.setCities(city);
 	}
+	@GetMapping("/util/getcity")
+	public ResponseEntity<List<CityDTO>> getCity() {
+		return  ResponseEntity.ok().body(AddressUtil.getCities());
+	}
 	@PostMapping("/util/addjob")
 	public MessageResponse addJob(@Valid @RequestBody JobDTO city) {
 		return  null;

@@ -30,8 +30,9 @@ public class Operator_LoginDetails {
 @Column(name="LOGIN_TIMESTAMP")
 private java.util.Date utilTimestamp;
 	
-@ManyToOne
-private Operator operator;
+	/*
+	 * @ManyToOne private Operator operator;
+	 */
 
 
 }

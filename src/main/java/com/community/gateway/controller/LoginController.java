@@ -17,8 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.community.gateway.dto.OperatorDTO;
-import com.community.gateway.jwt.config.JwtUtils;
+import com.community.gateway.dto.OperatorDTO;import com.community.gateway.jwt.config.JwtUtils;
 import com.community.gateway.jwt.config.UserDetailsImpl;
 import com.community.gateway.jwt.response.JWTResponse;
 import com.community.gateway.logical.OperatorLogical;
@@ -31,12 +30,11 @@ public class LoginController {
 	@Autowired
 	private OperatorLogical loginL;
 
-	@Autowired
-	AuthenticationManager authenticationManager;
 	
-	@Autowired
-	JwtUtils jwtUtils;
-
+	  @Autowired AuthenticationManager authenticationManager;
+	  
+	  @Autowired JwtUtils jwtUtils;
+	 
 	@PostMapping("/authenticate")
 	public ResponseEntity<JWTResponse> login(@Valid @RequestBody OperatorDTO operatorRequest) {
 
@@ -45,26 +43,24 @@ public class LoginController {
 		String role = null;
 		try {
 			operator = loginL.findByMobileNumber(operatorRequest.getMobileNumber());
-
-			System.out.println(
-					" Operator login :" + operatorRequest.getMobileNumber() + "  ::: " + operatorRequest.getPassword());
+			System.out.println("Operator Before pwd ::::" + operator.getId());
 			if (operatorRequest.getPassword().equals(operator.getPassword())) {
-
-				Authentication authentication = authenticationManager
-						.authenticate(new UsernamePasswordAuthenticationToken(
-								operator.getOperator_Details().getOperatorName() + "-" + operator.getMobileNumber(),
-								operator.getPassword()));
-
-				SecurityContextHolder.getContext().setAuthentication(authentication);
-
-				jwt = jwtUtils.generateJwtToken(authentication);
-				UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-				List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
-						.collect(Collectors.toList());
-				role = roles.get(0);
-
-				return ResponseEntity.ok(new JWTResponse(jwt, operator.getId(),
-						operator.getOperator_Details().getOperatorName(), operator.getMobileNumber(), role, "Success"));
+				System.out.println("Operator after pwd ::::" + operator.toString());
+				
+				  Authentication authentication = authenticationManager .authenticate(new
+				  UsernamePasswordAuthenticationToken(
+				  operator.getOperatorName() + "-" +
+				  operator.getMobileNumber(), operator.getPassword()));
+				  
+				  SecurityContextHolder.getContext().setAuthentication(authentication);
+				  
+				  jwt = jwtUtils.generateJwtToken(authentication); UserDetailsImpl userDetails
+				  = (UserDetailsImpl) authentication.getPrincipal(); List<String> roles =
+				  userDetails.getAuthorities().stream().map(item -> item.getAuthority())
+				  .collect(Collectors.toList()); role = roles.get(0);
+				 
+				return ResponseEntity.ok(new JWTResponse(jwt, operator.getId(), operator.getOperatorName(),
+						operator.getMobileNumber(), role, "Success"));
 
 			}
 		} catch (com.community.gateway.exception.ResourceNotFoundException e) {
@@ -73,8 +69,14 @@ public class LoginController {
 			System.out.println("Login Error Operator Not found");
 			return ResponseEntity.badRequest().body(new JWTResponse("Error: Login failed"));
 
-		}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Login Error Operator Not found");
+			return ResponseEntity.badRequest().body(new JWTResponse("Error: Login failed"));
 
+		}
+		System.out.println(" Operator failed");
 		return ResponseEntity.badRequest().body(new JWTResponse("Error: Login failed"));
 	}
 
