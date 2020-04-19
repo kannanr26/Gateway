@@ -12,11 +12,11 @@ public class JWTResponse {
     private String type = "GateWay";
     private Long id;
     private String username;
-    private String mobileNumber;
+    private long mobileNumber;
     private String roles;
     private String msg;
 
-    public JWTResponse(String accessToken, Long id, String username, String mobileNumber, String roles, String msg) {
+    public JWTResponse(String accessToken, Long id, String username, long mobileNumber, String roles, String msg) {
         this.token = accessToken;
         this.id = id;
         this.username = username;

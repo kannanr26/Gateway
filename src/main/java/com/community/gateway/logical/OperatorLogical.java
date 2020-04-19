@@ -16,6 +16,6 @@ public interface OperatorLogical {
 
     OperatorDTO save(@Valid OperatorDTO operatorDto);
 
-  	OperatorDTO findByMobileNumber(long mobileNumber) throws ResourceNotFoundException;
+  	OperatorDTO findByMobileNumber(long string) throws ResourceNotFoundException;
 
 }
