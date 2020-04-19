@@ -14,11 +14,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import com.community.gateway.dto.OperatorDTO;
-import com.community.gateway.jwt.config.JwtUtils;
-import com.community.gateway.jwt.config.UserDetailsImpl;
-import com.community.gateway.jwt.response.JWTResponse;
-import com.community.gateway.logical.OperatorLogical;
 
 import javax.validation.Valid;
 import java.util.Arrays;
@@ -48,7 +43,7 @@ public class LoginController {
         String jwt = null;
         String role = null;
         try {
-            operator = loginL.findByMobile(operatorRequest.getMobileNumber());
+            operator = loginL.findByMobileNumber(operatorRequest.getMobileNumber());
 
             System.out.println(
                     " Operator login :" + operatorRequest.getMobileNumber() + "  ::: " + operatorRequest.getPassword());
