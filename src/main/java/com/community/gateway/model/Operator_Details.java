@@ -27,7 +27,6 @@ import lombok.Setter;
 @Entity
 @Table(name = "OPERATOR_DETAIL")
 @Data
-
 public class Operator_Details {
 
 	@Id

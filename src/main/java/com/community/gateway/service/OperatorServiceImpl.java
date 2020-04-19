@@ -4,10 +4,13 @@
 package com.community.gateway.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
 
+import com.community.gateway.model.Operator_Details;
+import com.community.gateway.model.e_num.ERole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,9 +59,12 @@ public class OperatorServiceImpl implements OperatorService {
 	}
 
 	@Override
+
 	public Operator findByMobileNumber(long mobileNumber) throws ResourceNotFoundException {
+
 		Operator operator = operatorRepository.findByMobileNumber(mobileNumber)
 				.orElseThrow(() -> new ResourceNotFoundException("Operator not found for this mobileNumber :: " + mobileNumber));
+
 		return operator;
 	}
 

@@ -16,14 +16,7 @@ import com.community.gateway.logical.KulamLogical;
 
 import lombok.Data;
 
-//@Data
-//@Service
 public class FamilyUtil {
-
-	/*
-	 * public FamilyUtil() { FamilyUtil.gothirams = getGothirams();
-	 * FamilyUtil.kulams = getKulams(); FamilyUtil.deitys = getDeitys(); }
-	 */
 
 	@Autowired
 	private static GothiramLogical gothiramLocial;

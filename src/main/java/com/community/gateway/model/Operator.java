@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.community.gateway.model;
 
@@ -10,23 +10,18 @@ import javax.persistence.Basic;
  * Role will be assigned only the person who  
  */
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
+import lombok.Data;
+
+import javax.persistence.*;
+
 import javax.validation.constraints.Pattern;
 
 import com.community.gateway.model.e_num.ERole;
 
 @Entity
 @Table(name = "OPERATOR")
-//@Data
+@Data
 public class Operator {
 
 	@Id
@@ -41,10 +36,6 @@ public class Operator {
 	@Pattern(regexp = "(^$|[0-9]{10})")
 	private long mobileNumber;
 
-	/*
-	 * @OneToOne(mappedBy = "operator", fetch = FetchType.LAZY, cascade =
-	 * CascadeType.ALL) private Operator_Details operator_Details;
-	 */
 	@Column(name = "OPERATORNAME", nullable = false)
 	private String operatorName;
 	@Basic
@@ -102,21 +93,6 @@ public class Operator {
 	public void setMobileNumber(long mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
-	/*
-	 * public List<Operator_LoginDetails> getOperator_LoginDetails() { return
-	 * operator_LoginDetails; }
-	 * 
-	 * public void setOperator_LoginDetails(List<Operator_LoginDetails>
-	 * operator_LoginDetails) { this.operator_LoginDetails = operator_LoginDetails;
-	 * }
-	 */
-/*
-	public Operator_Details getOperator_Details() {
-		return operator_Details;
-	}
 
-	public void setOperator_Details(Operator_Details operator_Details) {
-		this.operator_Details = operator_Details;
-	}
-*/
+
 }

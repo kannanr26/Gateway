@@ -1,65 +1,20 @@
 package com.community.gateway.dto;
 
 import com.community.gateway.model.e_num.ERole;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-//@Data
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import java.util.Date;
+@Setter
+@Getter
+@EqualsAndHashCode
 public class OperatorDTO {
-	private long id;
-	private String operatorName;
-	private String password;
-	private long mobileNumber;
-
-	private ERole role;
-	//private java.util.Date createdTimestamp;
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getOperatorName() {
-		return operatorName;
-	}
-
-	public void setOperatorName(String operatorName) {
-		this.operatorName = operatorName;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public long getMobileNumber() {
-		return mobileNumber;
-	}
-
-	public void setMobileNumber(long mobileNumber) {
-		this.mobileNumber = mobileNumber;
-	}
-
-	/*
-	 * private Operator_DetailsDTO operator_Details;
-	 * 
-	 * public Operator_DetailsDTO getOperator_Details() { return operator_Details; }
-	 * 
-	 * public void setOperator_Details(Operator_DetailsDTO operator_Details) {
-	 * this.operator_Details = operator_Details; }
-	 */
-
-	public ERole getRole() {
-		return role;
-	}
-
-	public void setRole(ERole role) {
-		this.role = role;
-	}
+    private long id;
+    private String operatorName;
+    private String password;
+    private String mobileNumber;
+    private ERole role;
+    private Date createdTimestamp;
+    private Operator_DetailsDTO operator_Details;
 
 }
