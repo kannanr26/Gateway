@@ -44,8 +44,16 @@ public class CoursesServiceImpl implements CoursesService {
 	}
 
 	@Override
-	public Courses save(@Valid Courses courses) {
+	public Courses save(@Valid Courses courses) throws ResourceNotFoundException {
 		// TODO Auto-generated method stub
 		return coursesRepository.save(courses);
+	}
+
+	@Override
+	public Courses findByCourseName(String courseName) throws ResourceNotFoundException {
+		// TODO Auto-generated method stub
+		Courses courses = coursesRepository.findByCourseName(courseName)
+				.orElseThrow(() -> new ResourceNotFoundException("Course not found for this id :: " + courseName));
+		return courses;
 	}
 }

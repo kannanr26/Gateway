@@ -34,7 +34,7 @@ public class CoursesLogicalImpl implements CoursesLogical {
 	}
 
 	@Override
-	public CoursesDTO save(@Valid CoursesDTO coursesDto) {
+	public CoursesDTO save(@Valid CoursesDTO coursesDto) throws ResourceNotFoundException {
 		// TODO Auto-generated method stub
 		return coursesMapper.toCoursesDTO(coursesService.save(coursesMapper.toCourses(coursesDto)));
 		
@@ -44,6 +44,12 @@ public class CoursesLogicalImpl implements CoursesLogical {
 	public void delete(Long coursesId)throws ResourceNotFoundException {
 		coursesService.delete(coursesId);
 
+	}
+
+	@Override
+	public CoursesDTO findByCourseName(String courseName) throws ResourceNotFoundException {
+		// TODO Auto-generated method stub
+		return coursesMapper.toCoursesDTO(coursesService.findByCourseName(courseName));
 	}
 
 }

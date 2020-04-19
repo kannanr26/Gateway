@@ -16,7 +16,8 @@ public interface OperatorService{
 	void delete(Long operatorId);
 
 	Operator save(@Valid Operator operator);
+  
+	Operator findByMobileNumber(long mobileNumber) throws ResourceNotFoundException;
 
-	Operator findByMobileNumber(String mobileNumber) throws ResourceNotFoundException;
 
 }

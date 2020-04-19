@@ -41,21 +41,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable()
-
-                .authorizeRequests().antMatchers("/gateway/gw/authenticate").permitAll().and()
-
-// all other requests need to be authenticated
-
-                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and().sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-                .antMatchers("/gateway/gws/**").permitAll().antMatchers("/gateway/test/**").permitAll().anyRequest()
-                .authenticated();
-
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.cors().and().csrf().disable()
+		.authorizeRequests().antMatchers("/gateway/gw/authenticate").permitAll().and()
+		// all other requests need to be authenticated
+		.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and().sessionManagement()
+		.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
+		.antMatchers("/gateway/gws/**").permitAll().antMatchers("/gateway/test/**").permitAll().anyRequest()
+		.authenticated();
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 

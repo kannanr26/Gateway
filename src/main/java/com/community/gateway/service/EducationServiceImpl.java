@@ -48,4 +48,12 @@ public class EducationServiceImpl implements EducationService {
 		// TODO Auto-generated method stub
 		return educationRepository.save(education);
 	}
+
+	@Override
+	public Education findByEducationName(String educationName) throws ResourceNotFoundException {
+		// TODO Auto-generated method stub
+		Education education = educationRepository.findByEducationName(educationName)
+				.orElseThrow(() -> new ResourceNotFoundException("Education Name not found for this id :: " + educationName));
+		return education;
+	}
 }

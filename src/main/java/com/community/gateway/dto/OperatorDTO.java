@@ -4,9 +4,7 @@ import com.community.gateway.model.e_num.ERole;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.util.Date;
-
 @Setter
 @Getter
 @EqualsAndHashCode

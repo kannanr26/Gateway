@@ -13,10 +13,10 @@ public interface CoursesLogical {
 
 	CoursesDTO findById(Long coursesId)throws ResourceNotFoundException;
 
-	//CoursesDTO save(@Valid Courses coursesDTO);
+	CoursesDTO findByCourseName(String courseName)throws ResourceNotFoundException;
 
 	void delete(Long coursesId) throws ResourceNotFoundException;
 
-	CoursesDTO save(@Valid CoursesDTO coursesDto);
+	CoursesDTO save(@Valid CoursesDTO coursesDto) throws ResourceNotFoundException;
 
 }

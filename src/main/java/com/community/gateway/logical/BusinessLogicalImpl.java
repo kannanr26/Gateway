@@ -46,4 +46,10 @@ public class BusinessLogicalImpl implements BusinessLogical {
 
 	}
 
+	@Override
+	public BusinessDTO findByBusinessName(String business) throws ResourceNotFoundException {
+		// TODO Auto-generated method stub
+		return businessMapper.toBusinessDTO(businessService.findByBusinessName(business));
+	}
+
 }

@@ -9,6 +9,8 @@ import com.community.gateway.model.Education;
 
 public interface EducationService {
 	Education findById(Long educationId) throws ResourceNotFoundException;
+	
+	Education findByEducationName(String education) throws ResourceNotFoundException;
 
 	List<Education> findAll();
 

@@ -12,9 +12,7 @@ public interface Education_DetailLogical {
 	List<Education_DetailDTO> findAll();
 
 	Education_DetailDTO findById(Long education_detailId)throws ResourceNotFoundException;
-
-	//Education_DetailDTO save(@Valid Education_Detail education_detailDTO);
-
+	
 	void delete(Long education_detailId) throws ResourceNotFoundException;
 
 	Education_DetailDTO save(@Valid Education_DetailDTO education_detailDto);

@@ -46,4 +46,10 @@ public class JobLogicalImpl implements JobLogical {
 
 	}
 
+	@Override
+	public JobDTO findByRoleName(String roleName) throws ResourceNotFoundException {
+		// TODO Auto-generated method stub
+		return jobMapper.toJobDTO(jobService.findByRoleName(roleName));
+	}
+
 }

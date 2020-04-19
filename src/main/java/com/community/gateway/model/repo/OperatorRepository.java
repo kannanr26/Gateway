@@ -8,5 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface OperatorRepository extends CrudRepository<Operator, Long> {
-    Optional<Operator> findByMobileNumber(String mobileNumber);
+	Optional<Operator> findByMobileNumber(long mobileNumber);
+
 }

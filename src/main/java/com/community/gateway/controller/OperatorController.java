@@ -24,7 +24,7 @@ import com.community.gateway.logical.OperatorLogical;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
-@RequestMapping("/gateway")
+@RequestMapping("/gws")
 public class OperatorController {
 
 	@Autowired

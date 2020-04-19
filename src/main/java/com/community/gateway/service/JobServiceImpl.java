@@ -48,4 +48,11 @@ public class JobServiceImpl implements JobService {
 		// TODO Auto-generated method stub
 		return jobRepository.save(job);
 	}
+
+	@Override
+	public Job findByRoleName(String roleName) throws ResourceNotFoundException {
+		Job job = jobRepository.findByRoleName(roleName)
+				.orElseThrow(() -> new ResourceNotFoundException("Role Name not found for this id :: " + roleName));
+		return job;
+	}
 }

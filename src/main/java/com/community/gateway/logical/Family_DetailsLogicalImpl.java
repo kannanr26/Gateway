@@ -34,7 +34,7 @@ public class Family_DetailsLogicalImpl implements Family_DetailsLogical {
 	}
 
 	@Override
-	public Family_DetailsDTO save(@Valid Family_DetailsDTO family_detailsDto) {
+	public Family_DetailsDTO save(@Valid Family_DetailsDTO family_detailsDto) throws Exception {
 		// TODO Auto-generated method stub
 		return family_detailsMapper.toFamily_DetailsDTO(family_detailsService.save(family_detailsMapper.toFamily_Details(family_detailsDto)));
 		

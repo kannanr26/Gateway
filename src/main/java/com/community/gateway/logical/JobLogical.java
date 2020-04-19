@@ -12,9 +12,9 @@ public interface JobLogical {
 	List<JobDTO> findAll();
 
 	JobDTO findById(Long jobId)throws ResourceNotFoundException;
-
-	//JobDTO save(@Valid Job jobDTO);
-
+	
+	JobDTO findByRoleName(String roleName)throws ResourceNotFoundException;
+	
 	void delete(Long jobId) throws ResourceNotFoundException;
 
 	JobDTO save(@Valid JobDTO jobDto);

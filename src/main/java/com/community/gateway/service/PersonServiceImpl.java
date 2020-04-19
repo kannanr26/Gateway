@@ -44,7 +44,7 @@ public class PersonServiceImpl implements PersonService {
 	}
 
 	@Override
-	public Person save(@Valid Person person) {
+	public Person save(@Valid Person person) throws Exception{
 		// TODO Auto-generated method stub
 		return personRepository.save(person);
 	}

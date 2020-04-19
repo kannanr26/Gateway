@@ -3,59 +3,106 @@ package com.community.gateway.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.community.gateway.dto.Family_DetailsDTO;
+import com.community.gateway.dto.PersonDTO;
+import com.community.gateway.jwt.response.MessageResponse;
 import com.community.gateway.logical.Family_DetailsLogical;
+import com.community.gateway.logical.PersonLogical;
+import com.community.gateway.utility.UtilityConstant;
 
 @CrossOrigin(origins = "http://localhost:8081")
 @RestController
-@RequestMapping("/gateway")
+@RequestMapping("/gws")
 public class FamilyController {
 
 	@Autowired
 	private Family_DetailsLogical familyL;
 
-	/*
-	 * @GetMapping("/family/{id}") public ResponseEntity<OperatorDTO>
-	 * getOperatorById(@PathVariable(value = "id") Long operatorId) throws
-	 * ResourceNotFoundException { OperatorDTO operator = null; try { operator =
-	 * operatorL.findById(operatorId); } catch
-	 * (com.community.gateway.communitygateway.exception.ResourceNotFoundException
-	 * e) { // TODO Auto-generated catch block e.printStackTrace(); }
-	 * 
-	 * return ResponseEntity.ok().body(operator); }
-	 */
-	@PostMapping("/addfamily")
-	public Family_DetailsDTO createOperator(@Valid @RequestBody Family_DetailsDTO family) {
-		return familyL.save(family);
+	@Autowired
+	private PersonLogical personL;
+
+	@PostMapping("/addGroup")
+	public ResponseEntity<MessageResponse> create(@Valid @RequestBody Family_DetailsDTO family) {
+		MessageResponse msgResp;
+		try {
+			familyL.save(family);
+			msgResp = new MessageResponse(true, UtilityConstant.SUCCESS);
+			return ResponseEntity.ok().body(msgResp);
+		} catch (Exception e) {
+			e.printStackTrace();
+			msgResp = new MessageResponse(true, UtilityConstant.FAILED);
+		}
+		return ResponseEntity.badRequest().body(msgResp);
 	}
 
-	/*
-	 * @PutMapping("/operator/{id}") public ResponseEntity<OperatorDTO>
-	 * updateOperator(@PathVariable(value = "id") Long operatorId,
-	 * 
-	 * @Valid @RequestBody OperatorDTO operator) throws ResourceNotFoundException {
-	 * OperatorDTO operatorTOUpdate = null ; try { operatorTOUpdate =
-	 * operatorL.findById(operatorId); } catch
-	 * (com.community.gateway.communitygateway.exception.ResourceNotFoundException
-	 * e) { // TODO Auto-generated catch block e.printStackTrace(); }
-	 * operatorTOUpdate=operator;
-	 * 
-	 * final OperatorDTO updatedOperator= operatorL.save(operatorTOUpdate); return
-	 * ResponseEntity.ok(updatedOperator); }
-	 * 
-	 * @DeleteMapping("/operator/{id}") public Map<String, Boolean>
-	 * deleteOperator(@PathVariable(value = "id") Long operatorId) throws
-	 * ResourceNotFoundException { //Operator operator =
-	 * operatorL.findById(operatorId); try { operatorL.delete(operatorId); } catch
-	 * (com.community.gateway.communitygateway.exception.ResourceNotFoundException
-	 * e) { // TODO Auto-generated catch block e.printStackTrace(); } Map<String,
-	 * Boolean> response = new HashMap<>(); response.put("deleted", Boolean.TRUE);
-	 * return response; }
-	 */
+/*	@PutMapping("/updateGroup{id}")
+	public ResponseEntity<MessageResponse> updateGroup(@PathVariable(value = "id") Long familyId,
+			@Valid @RequestBody Family_DetailsDTO family) throws ResourceNotFoundException {
+		Family_DetailsDTO familyDtoUpdate = null;
+		MessageResponse msgResp = null;
+		try {
+			familyDtoUpdate = familyL.findById(familyId);
+		
+		familyDtoUpdate = family;
+
+		final Family_DetailsDTO updatedFamily = familyL.save(familyDtoUpdate);
+	} catch (com.community.gateway.exception.ResourceNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		msgResp = new MessageResponse(false, UtilityConstant.FAILED);
+	} catch (Exception e) {
+		e.printStackTrace();
+		msgResp = new MessageResponse(false, UtilityConstant.FAILED);
+	}
+
+	return ResponseEntity.badRequest().body(msgResp);
+
+	}*/
+
+	@PostMapping("/addGroupPerson")
+	public ResponseEntity<MessageResponse> createPerson(@PathVariable(value = "id") Long groupId,
+			@Valid @RequestBody PersonDTO person) {
+		MessageResponse msgResp;
+		try {
+			personL.save(person,groupId);
+			msgResp = new MessageResponse(true, UtilityConstant.SUCCESS);
+			return  ResponseEntity.ok().body(msgResp);
+		} catch (Exception e) {
+			e.printStackTrace();
+			msgResp = new MessageResponse(true, UtilityConstant.FAILED);
+		}
+		return ResponseEntity.badRequest().body(msgResp);
+	}
+
+/*	@PutMapping("/updateGroup{id}")
+	public ResponseEntity<MessageResponse> updatePerson(@PathVariable(value = "pid") Long personId, @Valid @RequestBody PersonDTO person)
+			throws ResourceNotFoundException {
+		PersonDTO personDtoUpdate = null;
+		MessageResponse msgResp = null;
+		try {
+			personDtoUpdate = personL.findById(personId);
+			personDtoUpdate = person;
+//			if (personDtoUpdate.getFamilyDetails().getId() == groupId) {
+//				//final PersonDTO updatedFamily = personL.update(personDtoUpdate,groupId);
+//				//return ResponseEntity.ok().body(new MessageResponse(true, UtilityConstant.UPDATED_SUCCESS));
+//			}
+		} catch (com.community.gateway.exception.ResourceNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			msgResp = new MessageResponse(false, UtilityConstant.FAILED);
+		} catch (Exception e) {
+			e.printStackTrace();
+			msgResp = new MessageResponse(false, UtilityConstant.FAILED);
+		}
+
+		return ResponseEntity.badRequest().body(msgResp);
+	}*/
 }

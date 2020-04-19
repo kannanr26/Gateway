@@ -12,6 +12,7 @@ public interface BusinessLogical {
 	List<BusinessDTO> findAll();
 
 	BusinessDTO findById(Long businessId)throws ResourceNotFoundException;
+	BusinessDTO findByBusinessName(String business)throws ResourceNotFoundException;
 
 	//BusinessDTO save(@Valid Business businessDTO);
 

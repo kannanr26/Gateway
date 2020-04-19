@@ -46,4 +46,10 @@ public class EducationLogicalImpl implements EducationLogical {
 
 	}
 
+	@Override
+	public EducationDTO findByEducationName(String education) throws ResourceNotFoundException {
+		// TODO Auto-generated method stub
+		return educationMapper.toEducationDTO(educationService.findByEducationName(education));
+	}
+
 }

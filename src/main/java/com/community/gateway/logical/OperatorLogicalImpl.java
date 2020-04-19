@@ -47,13 +47,9 @@ public class OperatorLogicalImpl implements OperatorLogical {
 	}
 
 	@Override
-	public OperatorDTO findByMobile(String mobileNumber) throws ResourceNotFoundException {
-		return operatorMapper.toOperatorsDTO(operatorService.findByMobileNumber(mobileNumber));
+	public OperatorDTO findByMobileNumber(long mobileNumber) throws ResourceNotFoundException {
+    return operatorMapper.toOperatorsDTO(operatorService.findByMobileNumber(mobileNumber));
 	}
 
-	/*
-	 * @Override public OperatorDTO findByMobileNumber(int number) throws
-	 * ResourceNotFoundException { // TODO Auto-generated method stub return null; }
-	 */
 
 }

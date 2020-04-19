@@ -14,16 +14,22 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import com.community.gateway.dto.OperatorDTO;
+import com.community.gateway.jwt.config.JwtUtils;
+import com.community.gateway.jwt.config.UserDetailsImpl;
+import com.community.gateway.jwt.response.JWTResponse;
+import com.community.gateway.logical.OperatorLogical;
+
 import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
-@RequestMapping("/gateway")
+@RequestMapping("/gw")
 public class LoginController {
-
     private final OperatorLogical loginL;
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
@@ -75,5 +81,6 @@ public class LoginController {
         return ResponseEntity.ok(
                 new JWTResponse(jwt, operator.getId(), operator.getOperatorName(), operator.getMobileNumber(), role, "Success"));
     }
+
 
 }
