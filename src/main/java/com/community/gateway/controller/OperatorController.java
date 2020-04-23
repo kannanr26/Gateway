@@ -1,8 +1,10 @@
 package com.community.gateway.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import javax.validation.Valid;
 
@@ -20,9 +22,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.community.gateway.dto.OperatorDTO;
+import com.community.gateway.jwt.response.MessageResponse;
 import com.community.gateway.logical.OperatorLogical;
 
-@CrossOrigin(origins = "http://localhost:8080")
+//@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("/gws")
 public class OperatorController {
@@ -50,8 +53,14 @@ public class OperatorController {
 	}
 
 	@PostMapping("/operator")
-	public OperatorDTO createOperator(@Valid @RequestBody OperatorDTO operator) {
-		return operatorL.save(operator);
+	public ResponseEntity<MessageResponse> createOperator(@Valid @RequestBody OperatorDTO operator) {
+		if(Pattern.matches("(^$|[0-9]{10})",(Long.toString(operator.getMobileNumber()) ).trim() )){
+			operator.setCreatedTimestamp(new Date(System.currentTimeMillis()));
+		 operatorL.save(operator);
+		 return ResponseEntity.ok().body(new MessageResponse(true,"Added Successfully"));
+		}
+		System.out.println(" Operator Failed to Mobilenumber");
+		return ResponseEntity.ok().body(new MessageResponse(false,"Failed"));
 	}
 
 	@PutMapping("/operator/{id}")
