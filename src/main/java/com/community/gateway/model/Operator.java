@@ -4,6 +4,7 @@
 package com.community.gateway.model;
 
 import javax.persistence.Basic;
+import javax.validation.constraints.Size;
 
 /**
  * @author deepikamalar
@@ -15,7 +16,6 @@ import lombok.Data;
 
 import javax.persistence.*;
 
-import javax.validation.constraints.Pattern;
 
 import com.community.gateway.model.e_num.ERole;
 
@@ -32,8 +32,7 @@ public class Operator {
 	@Column(name = "PASSWORD", nullable = false)
 	private String password;
 
-	@Column(name = "MOBILENUMBER", unique = true, nullable = false)
-	@Pattern(regexp = "(^$|[0-9]{10})")
+	@Column(name = "MOBILENUMBER", length = 10,unique = true, nullable = false)
 	private long mobileNumber;
 
 	@Column(name = "OPERATORNAME", nullable = false)
