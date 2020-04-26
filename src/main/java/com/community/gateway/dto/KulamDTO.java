@@ -1,9 +1,13 @@
 package com.community.gateway.dto;
 
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode
 public class KulamDTO {
-	private long id;
-	private String kulamName;
+    private long id;
+    private String kulamName;
 }

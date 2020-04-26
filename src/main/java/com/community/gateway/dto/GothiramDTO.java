@@ -1,11 +1,14 @@
 package com.community.gateway.dto;
 
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode
 public class GothiramDTO {
 
-	private long id;
-
-	private String gothiramName;
+    private long id;
+    private String gothiramName;
 }

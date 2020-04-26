@@ -1,14 +1,16 @@
 package com.community.gateway.dto;
 
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode
 public class DeityDTO {
 
-	private long id;
-
-	private String deityName;
-
-	private String cityName;
+    private long id;
+    private String deityName;
+    private String cityName;
 
 }
