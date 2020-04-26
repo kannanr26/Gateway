@@ -28,8 +28,16 @@ public class UtilityController {
 	 * @Autowired FamilyUtil familyUtil;
 	 */
 	@PostMapping("/util/addkulam")
-	public MessageResponse addKulam(@Valid @RequestBody KulamDTO kulam) {
-		return FamilyUtil.addKulams(kulam);
+	public ResponseEntity<MessageResponse> addKulam(@Valid @RequestBody KulamDTO kulam) {
+		System.out.println(" Before if ");
+		if( FamilyUtil.addkulam(kulam)) {
+			System.out.println(" in If ");
+			return ResponseEntity.ok().body(new MessageResponse(true ,"Kulam added Successfully "));
+		}
+		else {
+			System.out.println(" in Else ");
+			return ResponseEntity.badRequest().body(new MessageResponse(false ,"Kulam not Successfully "));
+		}
 	}
 	@GetMapping("/util/getkulams")
 	public ResponseEntity<List<KulamDTO>> getKulams() {

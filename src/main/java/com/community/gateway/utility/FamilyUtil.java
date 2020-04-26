@@ -1,5 +1,6 @@
 package com.community.gateway.utility;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import com.community.gateway.jwt.response.MessageResponse;
 import com.community.gateway.logical.DeityLogical;
 import com.community.gateway.logical.GothiramLogical;
 import com.community.gateway.logical.KulamLogical;
+import com.community.gateway.model.Kulam;
 
 import lombok.Data;
 
@@ -27,14 +29,15 @@ public class FamilyUtil {
 	@Autowired
 	private static DeityLogical deityLocial;
 
-	private static List<GothiramDTO> gothirams;
-	private static List<KulamDTO> kulams;
-	private static List<DeityDTO> deitys;
+	private static List<GothiramDTO> gothirams =new ArrayList<GothiramDTO>();
+	private static List<KulamDTO> kulams=new ArrayList<KulamDTO>();
+	private static List<DeityDTO> deitys=new ArrayList<DeityDTO>();
 	//private static List<CasteDTO> caste;
 	//private static List<>
 	public static List<GothiramDTO> getGothirams() {
 		if (FamilyUtil.gothirams == null || FamilyUtil.gothirams.isEmpty()) {
-			FamilyUtil.gothirams=gothiramLocial.findAll();
+			if(gothiramLocial.findAll()!=null)
+				FamilyUtil.gothirams=gothiramLocial.findAll();
 		}
 		return FamilyUtil.gothirams;
 	}
@@ -50,18 +53,25 @@ public class FamilyUtil {
 
 	public static List<KulamDTO> getKulams() {
 		if (FamilyUtil.kulams == null || FamilyUtil.kulams.isEmpty()) {
-			FamilyUtil.kulams= kulamLocial.findAll();
+			List<KulamDTO> kulamValue=new ArrayList<KulamDTO>();
+			kulamValue=kulamLocial.findAll();
+			if(kulamValue!=null)
+				FamilyUtil.kulams= kulamLocial.findAll();
 		}
 		return FamilyUtil.kulams;
 	}
 
-	public static MessageResponse addKulams(KulamDTO kulams) {
+	public static boolean addkulam(KulamDTO kulams) {
+		System.out.println("addkulam");
 		if (!getKulams().contains(kulams)) {
+			System.out.println("addkulam");
 			KulamDTO kulam = kulamLocial.save(kulams);
 			FamilyUtil.kulams.add(kulam);
-			return new MessageResponse(true ,"Kulam added Successfully ");
+			return true;
 		}
-		return new MessageResponse(false ,"Kulam not added");
+		System.out.println("if kulam");
+		
+		return false;
 
 	}
 
