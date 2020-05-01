@@ -18,7 +18,7 @@ import com.community.gateway.logical.Family_DetailsLogical;
 import com.community.gateway.logical.PersonLogical;
 import com.community.gateway.utility.UtilityConstant;
 
-@CrossOrigin(origins = "http://localhost:8081")
+//@CrossOrigin(origins = "http://localhost:8081")
 @RestController
 @RequestMapping("/gws")
 public class FamilyController {

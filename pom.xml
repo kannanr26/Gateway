@@ -10,10 +10,10 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.community.gateway</groupId>
-	<artifactId>communitygateway</artifactId>
+	<artifactId>gateway</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>communitygateway</name>
+	<name>gateway</name>
 	<description>Community Family gateway</description>
 
 	<properties>

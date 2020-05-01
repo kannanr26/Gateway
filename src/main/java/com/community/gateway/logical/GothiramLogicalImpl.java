@@ -1,5 +1,6 @@
 package com.community.gateway.logical;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -18,7 +19,7 @@ public class GothiramLogicalImpl implements GothiramLogical {
 
 	@Autowired
 	GothiramService gothiramService;
-	
+
 	@Autowired
 	GothiramMapper gothiramMapper;
 
@@ -26,6 +27,7 @@ public class GothiramLogicalImpl implements GothiramLogical {
 	public List<GothiramDTO> findAll() {
 		// TODO Auto-generated method stub
 		return gothiramMapper.toGothiramDTOs(gothiramService.findAll());
+
 	}
 
 	@Override
@@ -37,11 +39,11 @@ public class GothiramLogicalImpl implements GothiramLogical {
 	public GothiramDTO save(@Valid GothiramDTO gothiramDto) {
 		// TODO Auto-generated method stub
 		return gothiramMapper.toGothiramDTO(gothiramService.save(gothiramMapper.toGothiram(gothiramDto)));
-		
+
 	}
 
 	@Override
-	public void delete(Long gothiramId)throws ResourceNotFoundException {
+	public void delete(Long gothiramId) throws ResourceNotFoundException {
 		gothiramService.delete(gothiramId);
 
 	}
