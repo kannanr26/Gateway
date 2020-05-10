@@ -8,24 +8,20 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class JWTResponse {
-    private String token;
-    private String type = "GateWay";
-    private Long id;
-    private String username;
-    private long mobileNumber;
-    private String roles;
-    private String msg;
+	private String accessToken;
+	private String type = "GateWay";
+	private String userName;
+	private String roles;
+	private String message;
 
-    public JWTResponse(String accessToken, Long id, String username, long mobileNumber, String roles, String msg) {
-        this.token = accessToken;
-        this.id = id;
-        this.username = username;
-        this.mobileNumber = mobileNumber;
-        this.roles = roles;
-        this.msg = msg;
-    }
+	public JWTResponse(String accessToken, String userName, String roles, String msg) {
+		this.accessToken = accessToken;
+		this.userName = userName;
+		this.roles = roles;
+		this.message = msg;
+	}
 
-    public JWTResponse(String message) {
-        this.msg = message;
-    }
+	public JWTResponse(String message) {
+		this.message = message;
+	}
 }

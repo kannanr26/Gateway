@@ -22,14 +22,14 @@ import lombok.Data;
 @Data
 public class Role {
 
-	
-	  @Id
-	  
-	  @GeneratedValue(strategy = GenerationType.AUTO)
-	  
-	 @Column(name = "ROLEID", nullable = false) private long id;
-	/* * 
-	 * @Column(name = "ROLENAME", unique = true, nullable = false) private String
-	 * roleName;
-	 */
+	@Id
+
+	@GeneratedValue(strategy = GenerationType.AUTO)
+
+	@Column(name = "ROLEID", nullable = false)
+	private long id;
+
+	@Column(name = "ROLENAME", unique = true, nullable = false)
+	private String roleName;
+
 }

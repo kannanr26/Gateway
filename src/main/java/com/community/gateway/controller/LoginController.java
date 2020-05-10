@@ -18,7 +18,7 @@ import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("/gw")
 public class LoginController {
@@ -47,30 +47,33 @@ public class LoginController {
 			if (operatorRequest.getPassword().equals(operator.getPassword())) {
 				OperatorDTO finalOperator = operator;
 				GrantedAuthority grantedAuthority = (GrantedAuthority) () -> finalOperator.getRole().name();
-				
+				jwt=jwtUtils.generateJwtToken(finalOperator);
 				/*Authentication authentication = authenticationManager
 						.authenticate(new UsernamePasswordAuthenticationToken(operator.getMobileNumber(),
 								operator.getPassword(), Arrays.asList(grantedAuthority)));
 
 				SecurityContextHolder.getContext().setAuthentication(authentication);
 
-				jwt = jwtUtils.generateJwtToken(authentication);
-				UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+				jwt = jwtUtils.generateJwtToken(authentication);*/
+			/*	UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 				List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
 						.collect(Collectors.toList());
 				role = roles.get(0);*/
 				// role=operator.getRole().name();
+				
+				
+			}else {
+				return ResponseEntity.badRequest().body(new JWTResponse("Password mismatch"));
 			}
 		} catch (com.community.gateway.exception.ResourceNotFoundException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 			System.out.println("Login Error Operator Not found");
-			return ResponseEntity.badRequest().body(new JWTResponse("Error: Login failed"));
+			return ResponseEntity.badRequest().body(new JWTResponse("Operator Not found, Login failed"));
 
 		}
 
-		return ResponseEntity.ok(new JWTResponse(jwt, operator.getId(), operator.getOperatorName(),
-				operator.getMobileNumber(), operator.getRole().name(), "Success"));
+		return ResponseEntity.ok(new JWTResponse(jwt, operator.getOperatorName(), operator.getRole().name(), "Success"));
 	}
 
 }

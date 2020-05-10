@@ -7,19 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.community.gateway.dto.CityDTO;
-import com.community.gateway.dto.DeityDTO;
-import com.community.gateway.dto.GothiramDTO;
-import com.community.gateway.dto.KulamDTO;
-import com.community.gateway.jwt.response.MessageResponse;
 import com.community.gateway.logical.CityLogical;
 
 @Service
-public class AddressService {
+public class AddressUtilService {
 	private  final static List<CityDTO> cities = new ArrayList<CityDTO>();
 	private final CityLogical cityLogical;
 	
 	@Autowired
-	public AddressService (CityLogical cityLogical) {
+	public AddressUtilService (CityLogical cityLogical) {
 		this.cityLogical = cityLogical;
 	}
 	

@@ -16,7 +16,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 
-
+import com.community.gateway.model.e_num.EOperator;
 import com.community.gateway.model.e_num.ERole;
 
 @Entity
@@ -44,54 +44,5 @@ public class Operator {
 
 	@Enumerated(EnumType.ORDINAL)
 	private ERole role;
-
-	public long getId() {
-		return id;
-	}
-
-	public String getOperatorName() {
-		return operatorName;
-	}
-
-	public java.util.Date getCreatedTimestamp() {
-		return createdTimestamp;
-	}
-
-	public ERole getRole() {
-		return role;
-	}
-
-	public void setOperatorName(String operatorName) {
-		this.operatorName = operatorName;
-	}
-
-	public void setCreatedTimestamp(java.util.Date createdTimestamp) {
-		this.createdTimestamp = createdTimestamp;
-	}
-
-	public void setRole(ERole role) {
-		this.role = role;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public long getMobileNumber() {
-		return mobileNumber;
-	}
-
-	public void setMobileNumber(long mobileNumber) {
-		this.mobileNumber = mobileNumber;
-	}
-
 
 }

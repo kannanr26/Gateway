@@ -14,6 +14,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import com.community.gateway.dto.OperatorDTO;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -87,7 +89,22 @@ public class JwtUtils {
 	                .signWith(SignatureAlgorithm.HS256, signing_Key)
 	                .compact();
 	    }
+		public String generateJwtToken(OperatorDTO operator) {
 
+		//	UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
+	        Claims claims = Jwts.claims().setSubject(operator.getOperatorName());
+	      //  List<String>roles= userPrincipal.getAuthorities().stream().map(item -> item.getAuthority())	.collect(Collectors.toList());
+			String role=operator.getRole().name();
+	       claims.put("scopes", Arrays.asList(new SimpleGrantedAuthority(role)));
+
+	        return Jwts.builder()
+	                .setClaims(claims)
+	                .setIssuer(issuer)
+	                .setIssuedAt(new Date(System.currentTimeMillis()))
+	                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs*1000))
+	                .signWith(SignatureAlgorithm.HS256, signing_Key)
+	                .compact();
+	    }
 	    
 	public boolean validateJwtToken(String authToken,UserDetails userDetails) {
 		try {

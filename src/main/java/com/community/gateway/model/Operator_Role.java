@@ -28,10 +28,10 @@ public class Operator_Role {
 	  
 	  @GeneratedValue(strategy = GenerationType.AUTO)
 	 
-	  @Column(name = "OPERATOR_ROLE_ID", nullable = false) private long id;
-	 /** 
-	 * @Column(name = "OPERATOR_ROLE_NAME", unique = true, nullable = false) private
-	 * String roleName;
-	 */
+	  @Column(name = "OPERATOR_ROLEID", nullable = false) private long id;
+	  
+	  @Column(name = "OPERATOR_ROLE", unique = true, nullable = false) private
+	  String roleName;
+	 
 
 }

@@ -1,5 +1,5 @@
 package com.community.gateway.model.e_num;
 
-public enum Operator {
+public enum EOperator {
 	COLLECTED,ENTERED,COMPUTED
 }

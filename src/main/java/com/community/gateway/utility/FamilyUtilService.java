@@ -1,21 +1,20 @@
 package com.community.gateway.utility;
 
-import com.community.gateway.dto.DeityDTO;
-import com.community.gateway.dto.GothiramDTO;
-import com.community.gateway.dto.KulamDTO;
-import com.community.gateway.jwt.response.MessageResponse;
-import com.community.gateway.logical.DeityLogical;
-import com.community.gateway.logical.GothiramLogical;
-import com.community.gateway.logical.KulamLogical;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.BiPredicate;
+import com.community.gateway.dto.DeityDTO;
+import com.community.gateway.dto.GothiramDTO;
+import com.community.gateway.dto.KulamDTO;
+import com.community.gateway.logical.DeityLogical;
+import com.community.gateway.logical.GothiramLogical;
+import com.community.gateway.logical.KulamLogical;
 
 @Service
-public class FamilyService {
+public class FamilyUtilService {
 
 	private static final List<GothiramDTO> gothirams = new ArrayList<GothiramDTO>();
 	private static final List<KulamDTO> kulams = new ArrayList<KulamDTO>();
@@ -26,7 +25,7 @@ public class FamilyService {
 	private final DeityLogical deityLocial;
 
 	@Autowired
-	public FamilyService(GothiramLogical gothiramLogical, KulamLogical kulamLogical, DeityLogical deityLogical) {
+	public FamilyUtilService(GothiramLogical gothiramLogical, KulamLogical kulamLogical, DeityLogical deityLogical) {
 
 		this.gothiramLocial = gothiramLogical;
 		this.kulamLocial = kulamLogical;
