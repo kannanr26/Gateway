@@ -6,8 +6,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import java.util.Date;
-
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 @Setter
 @Getter
 @EqualsAndHashCode

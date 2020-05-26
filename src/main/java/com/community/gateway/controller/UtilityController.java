@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,6 +38,7 @@ import com.community.gateway.utility.FamilyUtilService;
 import com.community.gateway.utility.JobUtilService;
 import com.community.gateway.utility.RoleUtilService;
 import com.fasterxml.jackson.databind.ser.std.EnumSerializer;
+@CrossOrigin(origins = "http://localhost:8080")
 
 @RestController
 @RequestMapping("/gws")
@@ -63,8 +65,6 @@ public class UtilityController {
 		this.jobService=jobService;
 		this.roleService=roleService;
 		this.enumService=enumService;
-				
-
 	}
 
 	@PostMapping("/addkulam")
