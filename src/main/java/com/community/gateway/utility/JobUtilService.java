@@ -71,4 +71,31 @@ public class JobUtilService {
 
 	}
 
+	public boolean deleteJob(Long jobId) {
+		// TODO Auto-generated method stub
+		 try {
+			
+			 jobs.remove(jobLogical.findById(jobId));
+			 jobLogical.delete(jobId);
+				return true;
+			} catch (ResourceNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			}
+	}
+	public boolean deleteJobTitle(Long jobTitleId) {
+		// TODO Auto-generated method stub
+		 try {
+			 jobtitles.remove(jobtitleLogical.findById(jobTitleId));
+			 jobtitleLogical.delete(jobTitleId);
+			 
+				return true;
+			} catch (ResourceNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			}
+	}
+
 }

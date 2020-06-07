@@ -50,4 +50,18 @@ public class CoursesUtilService {
 	}
 
 
+	public boolean deleteCourse(Long courseId) {
+		// TODO Auto-generated method stub
+		try {
+			courses.remove(coursesLocial.findById(courseId));
+			coursesLocial.delete(courseId);
+			 
+				return true;
+			} catch (ResourceNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			}
+	}
+	
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.community.gateway.dto.BusinessDTO;
+import com.community.gateway.exception.ResourceNotFoundException;
 import com.community.gateway.logical.BusinessLogical;
 
 @Service
@@ -36,6 +37,22 @@ public class BusinessUtilService {
 			return true;
 		}
 		return false;
+
+	}
+
+
+	public boolean deleteBusiness(Long businessId) {
+		// TODO Auto-generated method stub
+		try {
+			business.remove(businessLocial.findById(businessId));
+			businessLocial.delete(businessId);
+			 
+				return true;
+			} catch (ResourceNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			}
 
 	}
 

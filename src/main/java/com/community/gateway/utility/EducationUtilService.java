@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.community.gateway.dto.EducationDTO;
+import com.community.gateway.exception.ResourceNotFoundException;
 import com.community.gateway.logical.EducationLogical;
 
 @Service
@@ -40,5 +41,16 @@ public class EducationUtilService {
 
 	}
 
-
+	public boolean deleteEducation(Long educationId) {
+		 try {
+			 educations.remove(educationLocial.findById(educationId));
+			 educationLocial.delete(educationId);
+			 
+				return true;
+			} catch (ResourceNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			}
+	}
 }

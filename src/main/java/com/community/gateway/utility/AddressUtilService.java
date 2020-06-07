@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.community.gateway.dto.CityDTO;
+import com.community.gateway.exception.ResourceNotFoundException;
 import com.community.gateway.logical.CityLogical;
 
 @Service
@@ -37,5 +38,16 @@ public class AddressUtilService {
 		return false;
 	}
 
-	
+	public boolean deleteCity(Long cityId) {
+		 try {
+			 cities.remove(cityLogical.findById(cityId));
+			 cityLogical.deleteCity(cityId);
+				return true;
+			} catch (ResourceNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			}
+	}
+
 }

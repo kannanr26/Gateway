@@ -1,14 +1,19 @@
 package com.community.gateway.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +27,7 @@ import com.community.gateway.dto.GothiramDTO;
 import com.community.gateway.dto.JobDTO;
 import com.community.gateway.dto.JobTitleDTO;
 import com.community.gateway.dto.KulamDTO;
+import com.community.gateway.dto.OperatorDTO;
 import com.community.gateway.dto.RoleDTO;
 import com.community.gateway.jwt.response.MessageResponse;
 import com.community.gateway.model.Business;
@@ -38,6 +44,7 @@ import com.community.gateway.utility.FamilyUtilService;
 import com.community.gateway.utility.JobUtilService;
 import com.community.gateway.utility.RoleUtilService;
 import com.fasterxml.jackson.databind.ser.std.EnumSerializer;
+
 @CrossOrigin(origins = "http://localhost:8080")
 
 @RestController
@@ -54,17 +61,18 @@ public class UtilityController {
 	private final EnumUtilService enumService;
 
 	@Autowired
-	public UtilityController(FamilyUtilService familyService, AddressUtilService addressService,BusinessUtilService businessService,
-			CoursesUtilService coursesService,EducationUtilService educationService,JobUtilService jobService,
-			RoleUtilService roleService,EnumUtilService enumService) {
+	public UtilityController(FamilyUtilService familyService, AddressUtilService addressService,
+			BusinessUtilService businessService, CoursesUtilService coursesService,
+			EducationUtilService educationService, JobUtilService jobService, RoleUtilService roleService,
+			EnumUtilService enumService) {
 		this.familyService = familyService;
 		this.addressService = addressService;
-		this.businessService=businessService;
-		this.courseService=coursesService;
-		this.educationService=educationService;
-		this.jobService=jobService;
-		this.roleService=roleService;
-		this.enumService=enumService;
+		this.businessService = businessService;
+		this.courseService = coursesService;
+		this.educationService = educationService;
+		this.jobService = jobService;
+		this.roleService = roleService;
+		this.enumService = enumService;
 	}
 
 	@PostMapping("/addkulam")
@@ -76,6 +84,29 @@ public class UtilityController {
 		} else
 			return ResponseEntity.badRequest().body(new MessageResponse(false, "Kulam not Successfully "));
 
+	}
+
+	@PutMapping("/putkulam/{id}")
+
+	public ResponseEntity<MessageResponse> editKulam(@PathVariable(value = "id") Long kulamId,
+			@RequestBody KulamDTO kulam) {
+		System.out.println(" Before if ");
+		if (familyService.addKulams(kulam)) {
+			System.out.println(" in If ");
+			return ResponseEntity.ok().body(new MessageResponse(true, "Kulam added Successfully "));
+		} else
+			return ResponseEntity.badRequest().body(new MessageResponse(false, "Kulam not Successfully "));
+
+	}
+
+	@DeleteMapping("/deleteKulam/{id}")
+	public ResponseEntity<MessageResponse> deleteKulam(@PathVariable(value = "id") Long kulamId)
+			throws ResourceNotFoundException {
+		if (familyService.deleteKulams(kulamId)) {
+			System.out.println(" in If ");
+			return ResponseEntity.ok().body(new MessageResponse(true, "Deleted Successfully "));
+		} else
+			return ResponseEntity.badRequest().body(new MessageResponse(false, "Not deleted Successfully "));
 	}
 
 	@GetMapping("/getkulams")
@@ -97,6 +128,16 @@ public class UtilityController {
 		return ResponseEntity.ok().body(familyService.getGothirams());
 	}
 
+	@DeleteMapping("/deletegothiram/{id}")
+	public ResponseEntity<MessageResponse> deleteGothiram(@PathVariable(value = "id") Long gothiramId)
+			throws ResourceNotFoundException {
+		if (familyService.deleteGothiram(gothiramId)) {
+			System.out.println(" in If ");
+			return ResponseEntity.ok().body(new MessageResponse(true, "Deleted Successfully "));
+		} else
+			return ResponseEntity.badRequest().body(new MessageResponse(false, "Deleted not Successfully "));
+	}
+	
 	@PostMapping("/adddeity")
 	public ResponseEntity<MessageResponse> addDeity(@Valid @RequestBody DeityDTO deity) {
 		if (familyService.addDeitys(deity))
@@ -110,6 +151,15 @@ public class UtilityController {
 		return ResponseEntity.ok().body(familyService.getDeitys());
 	}
 
+	@DeleteMapping("/deletedeity/{id}")
+	public ResponseEntity<MessageResponse> deleteDeity(@PathVariable(value = "id") Long deityId)
+			throws ResourceNotFoundException {
+		if (familyService.deleteDeity(deityId)) {
+			System.out.println(" in If ");
+			return ResponseEntity.ok().body(new MessageResponse(true, "Deleted Successfully "));
+		} else
+			return ResponseEntity.badRequest().body(new MessageResponse(false, "Deleted not Successfully "));
+	}
 	@PostMapping("/addcity")
 	public ResponseEntity<MessageResponse> addCity(@Valid @RequestBody CityDTO city) {
 		if (addressService.addCities(city))
@@ -124,6 +174,15 @@ public class UtilityController {
 		return ResponseEntity.ok().body(addressService.getCities());
 	}
 
+	@DeleteMapping("/deletecity/{id}")
+	public ResponseEntity<MessageResponse> deleteCity(@PathVariable(value = "id") Long cityId)
+			throws ResourceNotFoundException {
+		if (addressService.deleteCity(cityId)) {
+			System.out.println(" in If ");
+			return ResponseEntity.ok().body(new MessageResponse(true, "Deleted Successfully "));
+		} else
+			return ResponseEntity.badRequest().body(new MessageResponse(false, "Deleted not Successfully "));
+	}
 	@PostMapping("/addjob")
 	public ResponseEntity<MessageResponse> addJob(@Valid @RequestBody JobDTO job) {
 		if (jobService.addJobs(job))
@@ -137,8 +196,15 @@ public class UtilityController {
 	public ResponseEntity<List<JobDTO>> getJob() {
 		return ResponseEntity.ok().body(jobService.getJobs());
 	}
-
-	
+	@DeleteMapping("/deletejob/{id}")
+	public ResponseEntity<MessageResponse> deleteJob(@PathVariable(value = "id") Long jobId)
+			throws ResourceNotFoundException {
+		if (jobService.deleteJob(jobId)) {
+			System.out.println(" in If ");
+			return ResponseEntity.ok().body(new MessageResponse(true, "Deleted Successfully "));
+		} else
+			return ResponseEntity.badRequest().body(new MessageResponse(false, "Deleted not Successfully "));
+	}
 	@PostMapping("/addjobtitle")
 	public ResponseEntity<MessageResponse> addJobTitle(@Valid @RequestBody JobTitleDTO jobTitle) {
 		if (jobService.addJobTitles(jobTitle))
@@ -153,7 +219,16 @@ public class UtilityController {
 		return ResponseEntity.ok().body(jobService.getJobTitles());
 	}
 
-
+	@DeleteMapping("/deletejobtitle/{id}")
+	public ResponseEntity<MessageResponse> deleteJobTitle(@PathVariable(value = "id") Long jobTitleId)
+			throws ResourceNotFoundException {
+		if (jobService.deleteJobTitle(jobTitleId)) {
+			System.out.println(" in If ");
+			return ResponseEntity.ok().body(new MessageResponse(true, "Deleted Successfully "));
+		} else
+			return ResponseEntity.badRequest().body(new MessageResponse(false, "Deleted not Successfully "));
+	}
+	
 	@PostMapping("/addeducation")
 	public ResponseEntity<MessageResponse> addEducation(@Valid @RequestBody EducationDTO education) {
 		if (educationService.addEducations(education))
@@ -167,8 +242,16 @@ public class UtilityController {
 	public ResponseEntity<List<EducationDTO>> getEducation() {
 		return ResponseEntity.ok().body(educationService.getEducations());
 	}
+	@DeleteMapping("/deleteeducation/{id}")
+	public ResponseEntity<MessageResponse> deleteEducation(@PathVariable(value = "id") Long educationId)
+			throws ResourceNotFoundException {
+		if (educationService.deleteEducation(educationId)) {
+			System.out.println(" in If ");
+			return ResponseEntity.ok().body(new MessageResponse(true, "Deleted Successfully "));
+		} else
+			return ResponseEntity.badRequest().body(new MessageResponse(false, "Deleted not Successfully "));
+	}
 	
-
 	@PostMapping("/addcourses")
 	public ResponseEntity<MessageResponse> addCourse(@Valid @RequestBody CoursesDTO courses) {
 		if (courseService.addCourses(courses))
@@ -182,8 +265,15 @@ public class UtilityController {
 	public ResponseEntity<List<CoursesDTO>> getCourses() {
 		return ResponseEntity.ok().body(courseService.getCourses());
 	}
-	
-
+	@DeleteMapping("/deletecourse/{id}")
+	public ResponseEntity<MessageResponse> deleteCourse(@PathVariable(value = "id") Long courseId)
+			throws ResourceNotFoundException {
+		if (courseService.deleteCourse(courseId)) {
+			System.out.println(" in If ");
+			return ResponseEntity.ok().body(new MessageResponse(true, "Deleted Successfully "));
+		} else
+			return ResponseEntity.badRequest().body(new MessageResponse(false, "Deleted not Successfully "));
+	}
 	@PostMapping("/addbusiness")
 	public ResponseEntity<MessageResponse> addBusiness(@Valid @RequestBody BusinessDTO business) {
 		if (businessService.addbusiness(business))
@@ -197,8 +287,15 @@ public class UtilityController {
 	public ResponseEntity<List<BusinessDTO>> getBusiness() {
 		return ResponseEntity.ok().body(businessService.getBusiness());
 	}
-	
-
+	@DeleteMapping("/deletebusiness/{id}")
+	public ResponseEntity<MessageResponse> deleteBusiness(@PathVariable(value = "id") Long businessId)
+			throws ResourceNotFoundException {
+		if (businessService.deleteBusiness(businessId)) {
+			System.out.println(" in If ");
+			return ResponseEntity.ok().body(new MessageResponse(true, "Deleted Successfully "));
+		} else
+			return ResponseEntity.badRequest().body(new MessageResponse(false, "Deleted not Successfully "));
+	}
 	@PostMapping("/addRole")
 	public ResponseEntity<MessageResponse> addRoles(@Valid @RequestBody RoleDTO roleDto) {
 		if (roleService.addRoles(roleDto))
@@ -212,8 +309,6 @@ public class UtilityController {
 	public ResponseEntity<List<RoleDTO>> getRoles() {
 		return ResponseEntity.ok().body(roleService.getRoles());
 	}
-	
-	
 
 	/*
 	 * @PostMapping("/util/addoperatortype") public ResponseEntity<MessageResponse>
