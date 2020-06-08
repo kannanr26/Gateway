@@ -1,7 +1,6 @@
 package com.community.gateway.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.community.gateway.dto.BloodGroupDTO;
 import com.community.gateway.dto.BusinessDTO;
 import com.community.gateway.dto.CityDTO;
 import com.community.gateway.dto.CoursesDTO;
@@ -27,14 +27,9 @@ import com.community.gateway.dto.GothiramDTO;
 import com.community.gateway.dto.JobDTO;
 import com.community.gateway.dto.JobTitleDTO;
 import com.community.gateway.dto.KulamDTO;
-import com.community.gateway.dto.OperatorDTO;
 import com.community.gateway.dto.RoleDTO;
 import com.community.gateway.jwt.response.MessageResponse;
-import com.community.gateway.model.Business;
-import com.community.gateway.model.JobTitle;
 import com.community.gateway.model.e_num.EOperator;
-import com.community.gateway.service.BusinessService;
-import com.community.gateway.service.RoleService;
 import com.community.gateway.utility.AddressUtilService;
 import com.community.gateway.utility.BusinessUtilService;
 import com.community.gateway.utility.CoursesUtilService;
@@ -42,8 +37,8 @@ import com.community.gateway.utility.EducationUtilService;
 import com.community.gateway.utility.EnumUtilService;
 import com.community.gateway.utility.FamilyUtilService;
 import com.community.gateway.utility.JobUtilService;
+import com.community.gateway.utility.PersonalUtilService;
 import com.community.gateway.utility.RoleUtilService;
-import com.fasterxml.jackson.databind.ser.std.EnumSerializer;
 
 @CrossOrigin(origins = "http://localhost:8080")
 
@@ -52,6 +47,7 @@ import com.fasterxml.jackson.databind.ser.std.EnumSerializer;
 public class UtilityController {
 
 	private final FamilyUtilService familyService;
+	private final PersonalUtilService personService;
 	private final AddressUtilService addressService;
 	private final BusinessUtilService businessService;
 	private final CoursesUtilService courseService;
@@ -64,7 +60,7 @@ public class UtilityController {
 	public UtilityController(FamilyUtilService familyService, AddressUtilService addressService,
 			BusinessUtilService businessService, CoursesUtilService coursesService,
 			EducationUtilService educationService, JobUtilService jobService, RoleUtilService roleService,
-			EnumUtilService enumService) {
+			EnumUtilService enumService,PersonalUtilService personService) {
 		this.familyService = familyService;
 		this.addressService = addressService;
 		this.businessService = businessService;
@@ -72,6 +68,7 @@ public class UtilityController {
 		this.educationService = educationService;
 		this.jobService = jobService;
 		this.roleService = roleService;
+		this.personService=personService;
 		this.enumService = enumService;
 	}
 
@@ -169,7 +166,7 @@ public class UtilityController {
 
 	}
 
-	@GetMapping("/getcity")
+	@GetMapping("/getcitys")
 	public ResponseEntity<List<CityDTO>> getCity() {
 		return ResponseEntity.ok().body(addressService.getCities());
 	}
@@ -192,7 +189,7 @@ public class UtilityController {
 
 	}
 
-	@GetMapping("/getjob")
+	@GetMapping("/getjobs")
 	public ResponseEntity<List<JobDTO>> getJob() {
 		return ResponseEntity.ok().body(jobService.getJobs());
 	}
@@ -214,7 +211,7 @@ public class UtilityController {
 
 	}
 
-	@GetMapping("/getjobtitle")
+	@GetMapping("/getjobtitles")
 	public ResponseEntity<List<JobTitleDTO>> getJobTitle() {
 		return ResponseEntity.ok().body(jobService.getJobTitles());
 	}
@@ -238,8 +235,8 @@ public class UtilityController {
 
 	}
 
-	@GetMapping("/geteducation")
-	public ResponseEntity<List<EducationDTO>> getEducation() {
+	@GetMapping("/geteducations")
+	public ResponseEntity<List<EducationDTO>> getEducations() {
 		return ResponseEntity.ok().body(educationService.getEducations());
 	}
 	@DeleteMapping("/deleteeducation/{id}")
@@ -252,7 +249,7 @@ public class UtilityController {
 			return ResponseEntity.badRequest().body(new MessageResponse(false, "Deleted not Successfully "));
 	}
 	
-	@PostMapping("/addcourses")
+	@PostMapping("/addcourse")
 	public ResponseEntity<MessageResponse> addCourse(@Valid @RequestBody CoursesDTO courses) {
 		if (courseService.addCourses(courses))
 			return ResponseEntity.ok().body(new MessageResponse(true, "Course added Successfully "));
@@ -297,7 +294,7 @@ public class UtilityController {
 			return ResponseEntity.badRequest().body(new MessageResponse(false, "Deleted not Successfully "));
 	}
 	@PostMapping("/addRole")
-	public ResponseEntity<MessageResponse> addRoles(@Valid @RequestBody RoleDTO roleDto) {
+	public ResponseEntity<MessageResponse> addRole(@Valid @RequestBody RoleDTO roleDto) {
 		if (roleService.addRoles(roleDto))
 			return ResponseEntity.ok().body(new MessageResponse(true, "Role added Successfully "));
 		else
@@ -305,11 +302,32 @@ public class UtilityController {
 
 	}
 
-	@GetMapping("/getrole")
+	@GetMapping("/getroles")
 	public ResponseEntity<List<RoleDTO>> getRoles() {
 		return ResponseEntity.ok().body(roleService.getRoles());
 	}
 
+	@PostMapping("/addbloodgroup")
+	public ResponseEntity<MessageResponse> addBloodGroup(@Valid @RequestBody BloodGroupDTO bloodGroup) {
+		if (personService.addBloodGroup(bloodGroup))
+			return ResponseEntity.ok().body(new MessageResponse(true, "BloodGroup added Successfully "));
+		else
+			return ResponseEntity.badRequest().body(new MessageResponse(false, " BloodGroup not Successfully "));
+
+	}
+
+	@GetMapping("/getbloodgroups")
+	public ResponseEntity<List<BloodGroupDTO>> getBloodGroups() {
+		return ResponseEntity.ok().body(personService.getBloodGroups());
+	}
+	@DeleteMapping("/deletebloodgroup/{id}")
+	public ResponseEntity<MessageResponse> deleteBloodGroup(@PathVariable(value = "id") Long bloodGroupId)
+			throws ResourceNotFoundException {
+		if (personService.deleteBloodGroup(bloodGroupId)) {
+			return ResponseEntity.ok().body(new MessageResponse(true, "Deleted Successfully "));
+		} else
+			return ResponseEntity.badRequest().body(new MessageResponse(false, "Deleted not Successfully "));
+	}
 	/*
 	 * @PostMapping("/util/addoperatortype") public ResponseEntity<MessageResponse>
 	 * addOperatorType(@Valid @RequestBody JobTitleDTO jobTitle) { if
@@ -321,8 +339,8 @@ public class UtilityController {
 	 * }
 	 */
 
-	@GetMapping("/getoperatortype")
-	public ResponseEntity<List<EOperator>> getOpeatorType() {
+	@GetMapping("/getoperatortypes")
+	public ResponseEntity<List<EOperator>> getOpeatorTypes() {
 		return ResponseEntity.ok().body(enumService.getOperatorType());
 	}
 }
