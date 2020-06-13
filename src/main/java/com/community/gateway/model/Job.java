@@ -19,6 +19,6 @@ public class Job {
 	@Column(name = "JOBID", nullable = false)
 	private long id;
 	@Column(name = "JOBName", unique = true, nullable = false)
-	private String roleName;
+	private String jobName;
 
 }

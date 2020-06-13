@@ -17,5 +17,5 @@ public interface JobTitleService {
 
 	JobTitle save(@Valid JobTitle jobtitle)throws ResourceNotFoundException;
 
-	JobTitle findByRoleName(String roleName)throws ResourceNotFoundException;
+	JobTitle findByJobTitleName(String jobTitleName)throws ResourceNotFoundException;
 }

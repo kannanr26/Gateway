@@ -50,9 +50,9 @@ public class JobServiceImpl implements JobService {
 	}
 
 	@Override
-	public Job findByRoleName(String roleName) throws ResourceNotFoundException {
-		Job job = jobRepository.findByRoleName(roleName)
-				.orElseThrow(() -> new ResourceNotFoundException("Role Name not found for this id :: " + roleName));
+	public Job findByJobName(String jobName) throws ResourceNotFoundException {
+		Job job = jobRepository.findByJobName(jobName)
+				.orElseThrow(() -> new ResourceNotFoundException("Job Name not found for this id :: " + jobName));
 		return job;
 	}
 }

@@ -3,7 +3,7 @@ import lombok.Data;
 @Data
 public class DistrictDTO {
 	private int id;
-
-	private String name;
+	private long stateId;
+	private String districtName;
 
 }

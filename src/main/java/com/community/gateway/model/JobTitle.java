@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 import lombok.Data;
 @Entity
-@Table(name = "JOB")
+@Table(name = "JOBTITLE")
 @Data
 
 public class JobTitle {
@@ -18,7 +18,7 @@ public class JobTitle {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "JOBID", nullable = false)
 	private long id;
-	@Column(name = "JOBName", unique = true, nullable = false)
-	private String roleName;
+	@Column(name = "JOBTITLENAME", unique = true, nullable = false)
+	private String jobTitleName;
 
 }

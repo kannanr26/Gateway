@@ -11,6 +11,6 @@ import com.community.gateway.model.Job;
 @Repository
 public interface JobRepository extends CrudRepository<Job, Long> {
 
-	Optional<Job> findByRoleName(String roleName);
+	Optional<Job> findByJobName(String jobName);
 
 }

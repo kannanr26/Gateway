@@ -13,7 +13,7 @@ public interface JobLogical {
 
 	JobDTO findById(Long jobId)throws ResourceNotFoundException;
 	
-	JobDTO findByRoleName(String roleName)throws ResourceNotFoundException;
+	JobDTO findByJobName(String jobName)throws ResourceNotFoundException;
 	
 	void delete(Long jobId) throws ResourceNotFoundException;
 

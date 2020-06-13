@@ -6,10 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.community.gateway.dto.CasteDTO;
 import com.community.gateway.dto.DeityDTO;
 import com.community.gateway.dto.GothiramDTO;
 import com.community.gateway.dto.KulamDTO;
 import com.community.gateway.exception.ResourceNotFoundException;
+import com.community.gateway.logical.CasteLogical;
 import com.community.gateway.logical.DeityLogical;
 import com.community.gateway.logical.GothiramLogical;
 import com.community.gateway.logical.KulamLogical;
@@ -20,17 +22,21 @@ public class FamilyUtilService {
 	private static final List<GothiramDTO> gothirams = new ArrayList<GothiramDTO>();
 	private static final List<KulamDTO> kulams = new ArrayList<KulamDTO>();
 	private static final List<DeityDTO> deitys = new ArrayList<DeityDTO>();
+	private static final List<CasteDTO> castes = new ArrayList<CasteDTO>();
+	
 
 	private final GothiramLogical gothiramLogical;
 	private final KulamLogical kulamLogical;
 	private final DeityLogical deityLogical;
+	private final CasteLogical casteLogical;
 
 	@Autowired
-	public FamilyUtilService(GothiramLogical gothiramLogical, KulamLogical kulamLogical, DeityLogical deityLogical) {
+	public FamilyUtilService(GothiramLogical gothiramLogical, KulamLogical kulamLogical, DeityLogical deityLogical,CasteLogical casteLogical) {
 
 		this.gothiramLogical = gothiramLogical;
 		this.kulamLogical = kulamLogical;
 		this.deityLogical = deityLogical;
+		this.casteLogical =casteLogical;
 	}
 
 	public List<GothiramDTO> getGothirams() {
@@ -76,6 +82,8 @@ public class FamilyUtilService {
 	}
 
 	public boolean addDeitys(DeityDTO deityDTO) {
+		
+		
 		if (getDeitys().stream().noneMatch(x -> x.getCityName().equalsIgnoreCase(deityDTO.getCityName())
 				&& x.getDeityName().equalsIgnoreCase(deityDTO.getDeityName()))) { // TODO need to check the logic
 			DeityDTO deity = deityLogical.save(deityDTO);
@@ -97,6 +105,36 @@ public class FamilyUtilService {
 			return false;
 		}
 	}
+
+	public List<CasteDTO> getCaste() {
+		if (castes.isEmpty()) {
+			castes.addAll(casteLogical.findAll());
+		}
+		return castes;
+	}
+
+	public boolean addCaste(CasteDTO casteDTO) {
+		if (getCaste().stream().noneMatch(x -> x.getCasteName().equalsIgnoreCase(casteDTO.getCasteName()))) {
+			CasteDTO caste = casteLogical.save(casteDTO);
+			castes.add(caste);
+			return true;
+		}
+		return false;
+	}
+
+	public boolean deleteCastes(Long casteId) {
+		// TODO Auto-generated method stub
+		 try {
+			 castes.remove(casteLogical.findById(casteId));
+			 casteLogical.delete(casteId);
+			return true;
+		} catch (ResourceNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 
 	public boolean deleteGothiram(Long gothiramId) {
 		// TODO Auto-generated method stub

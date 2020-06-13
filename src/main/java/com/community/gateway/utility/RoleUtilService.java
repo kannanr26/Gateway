@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.community.gateway.dto.RoleDTO;
+import com.community.gateway.exception.ResourceNotFoundException;
 import com.community.gateway.logical.RoleLogical;
 
 @Service
@@ -39,6 +40,16 @@ public class RoleUtilService {
 		return false;
 
 	}
-
-
+	public boolean deleteRole(Long roleId) {
+		// TODO Auto-generated method stub
+		try {
+			roles.remove(roleLocial.findById(roleId));
+			roleLocial.delete(roleId);
+			return true;
+		} catch (ResourceNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
 }

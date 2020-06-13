@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import com.community.gateway.dto.BusinessDTO;
 import com.community.gateway.dto.Business_DetailDTO;
 import com.community.gateway.dto.CoursesDTO;
-import com.community.gateway.dto.DepartmentDTO;
 import com.community.gateway.dto.EducationDTO;
 import com.community.gateway.dto.Education_DetailDTO;
 import com.community.gateway.dto.JobDTO;
@@ -20,16 +19,11 @@ import com.community.gateway.dto.Job_DetailDTO;
 import com.community.gateway.dto.PersonDTO;
 import com.community.gateway.dto.RelationShipsDTO;
 import com.community.gateway.exception.ResourceNotFoundException;
-import com.community.gateway.jwt.response.MessageResponse;
 import com.community.gateway.mapper.BusinessMapper;
 import com.community.gateway.mapper.EducationMapper;
 import com.community.gateway.mapper.JobMapper;
 import com.community.gateway.mapper.PersonMapper;
-import com.community.gateway.model.Person;
 import com.community.gateway.model.e_num.ERelation;
-import com.community.gateway.service.BusinessService;
-import com.community.gateway.service.EducationService;
-import com.community.gateway.service.JobService;
 import com.community.gateway.service.PersonService;
 
 @Service
@@ -99,8 +93,8 @@ public class PersonLogicalImpl implements PersonLogical {
 		
 		BusinessDTO businessDTO=	businessLogical.findByBusinessName(personDto.getBusiness().getBusinessStr());
 		
-		JobDTO jobDTO=jobLogical.findByRoleName( personDto.getJob().getJobStr());
-		JobTitleDTO jobTitleDTO=jobTitleLogical.findByRoleName(personDto.getJob().getJobTitleStr());
+		JobDTO jobDTO=jobLogical.findByJobName( personDto.getJob().getJobStr());
+		JobTitleDTO jobTitleDTO=jobTitleLogical.findByJobTitleName(personDto.getJob().getJobTitleStr());
 		CoursesDTO courseJobDTO=courseLogical.findByCourseName(personDto.getJob().getDepartmentStr());
 		Education_DetailDTO educationDetailsToSave;
 		Job_DetailDTO jobDetailsToSave;

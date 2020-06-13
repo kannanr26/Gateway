@@ -23,7 +23,7 @@ public class CoursesServiceImpl implements CoursesService {
 		// TODO Auto-generated method stub
 
 		Courses courses = coursesRepository.findById(coursesId)
-				.orElseThrow(() -> new ResourceNotFoundException("Operator not found for this id :: " + coursesId));
+				.orElseThrow(() -> new ResourceNotFoundException("Cources not found for this id :: " + coursesId));
 		return courses;
 	}
 

@@ -19,6 +19,6 @@ public interface JobTitleLogical {
 
 	JobTitleDTO save(@Valid JobTitleDTO jobtitleDto) throws ResourceNotFoundException;
 
-	JobTitleDTO findByRoleName(String roleName)  throws ResourceNotFoundException;
+	JobTitleDTO findByJobTitleName(String jobTitleName)  throws ResourceNotFoundException;
 
 }

@@ -16,16 +16,16 @@ import com.community.gateway.logical.JobTitleLogical;
 public class JobUtilService {
 
 	private static final List<JobDTO> jobs = new ArrayList<JobDTO>();
-	private static final List<JobTitleDTO> jobtitles = new ArrayList<JobTitleDTO>();
+	private static final List<JobTitleDTO> jobTitles = new ArrayList<JobTitleDTO>();
 
 	private final JobLogical jobLogical;
-	private final JobTitleLogical jobtitleLogical;
+	private final JobTitleLogical jobTitleLogical;
 
 	@Autowired
 	public JobUtilService(JobLogical jobLogical, JobTitleLogical jobtitleLogical) {
 
 		this.jobLogical = jobLogical;
-		this.jobtitleLogical = jobtitleLogical;
+		this.jobTitleLogical = jobtitleLogical;
 	}
 
 	public List<JobDTO> getJobs() {
@@ -36,8 +36,8 @@ public class JobUtilService {
 	}
 
 	public boolean addJobs(JobDTO jobDTO) {
-		System.out.println("  jobDTO" + jobDTO.getRoleName());
-		if (getJobs().stream().noneMatch(x -> x.getRoleName().equalsIgnoreCase(jobDTO.getRoleName()))) {
+		System.out.println("  jobDTO" + jobDTO.getJobName());
+		if (getJobs().stream().noneMatch(x -> x.getJobName().equalsIgnoreCase(jobDTO.getJobName()))) {
 			System.out.println(" inside  if jobDTO");
 			JobDTO job = jobLogical.save(jobDTO);
 			jobs.add(job);
@@ -47,18 +47,19 @@ public class JobUtilService {
 	}
 
 	public List<JobTitleDTO> getJobTitles() {
-		if (jobtitles.isEmpty()) {
-			jobtitles.addAll(jobtitleLogical.findAll());
+		if (jobTitles.isEmpty()) {
+			jobTitles.addAll(jobTitleLogical.findAll());
 		}
-		return jobtitles;
+		return jobTitles;
 	}
 
-	public boolean addJobTitles(JobTitleDTO jobtitleDTO) {
-		if (getJobTitles().stream().noneMatch(x -> x.getRoleName().equalsIgnoreCase(jobtitleDTO.getRoleName()))) {
-			JobTitleDTO jobtitle;
+	public boolean addJobTitles(JobTitleDTO jobTitleDTO) {
+		if (getJobTitles().stream().noneMatch(x -> x.getJobTitleName().equalsIgnoreCase(jobTitleDTO.getJobTitleName()))) {
+			JobTitleDTO jobTitleToSave;
 			try {
-				jobtitle = jobtitleLogical.save(jobtitleDTO);
-				jobtitles.add(jobtitle);
+				System.out.println(" jobTitleDTO.getJobTitleName() "+jobTitleDTO.getJobTitleName());
+				jobTitleToSave = jobTitleLogical.save(jobTitleDTO);
+				jobTitles.add(jobTitleToSave);
 
 				return true;
 			} catch (ResourceNotFoundException e) {
@@ -87,8 +88,8 @@ public class JobUtilService {
 	public boolean deleteJobTitle(Long jobTitleId) {
 		// TODO Auto-generated method stub
 		 try {
-			 jobtitles.remove(jobtitleLogical.findById(jobTitleId));
-			 jobtitleLogical.delete(jobTitleId);
+			 jobTitles.remove(jobTitleLogical.findById(jobTitleId));
+			 jobTitleLogical.delete(jobTitleId);
 			 
 				return true;
 			} catch (ResourceNotFoundException e) {

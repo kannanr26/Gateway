@@ -33,8 +33,8 @@ public class JobTitleLogicalImpl implements JobTitleLogical {
 		return jobtitleMapper.toJobTitleDTO(jobtitleService.findById(jobtitleId));
 	}
 	@Override
-	public JobTitleDTO findByRoleName(String roleName) throws ResourceNotFoundException {
-		return jobtitleMapper.toJobTitleDTO(jobtitleService.findByRoleName(roleName));
+	public JobTitleDTO findByJobTitleName(String roleName) throws ResourceNotFoundException {
+		return jobtitleMapper.toJobTitleDTO(jobtitleService.findByJobTitleName(roleName));
 	}
 
 	@Override

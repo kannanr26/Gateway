@@ -16,13 +16,13 @@ import com.community.gateway.model.repo.JobTitleRepository;
 public class JobTitleServiceImpl implements JobTitleService {
 
 	@Autowired
-	JobTitleRepository jobtitleRepository;
+	JobTitleRepository jobTitleRepository;
 
 	@Override
 	public JobTitle findById(Long jobtitleId) throws ResourceNotFoundException {
 		// TODO Auto-generated method stub
 
-		JobTitle jobtitle = jobtitleRepository.findById(jobtitleId)
+		JobTitle jobtitle = jobTitleRepository.findById(jobtitleId)
 				.orElseThrow(() -> new ResourceNotFoundException("Operator not found for this id :: " + jobtitleId));
 		return jobtitle;
 	}
@@ -30,7 +30,7 @@ public class JobTitleServiceImpl implements JobTitleService {
 	@Override
 	public List<JobTitle> findAll() {
 		List<JobTitle> list = new ArrayList<>();
-		Iterable<JobTitle> customers = jobtitleRepository.findAll();
+		Iterable<JobTitle> customers = jobTitleRepository.findAll();
 
 		customers.forEach(list::add);
 		return list;
@@ -39,21 +39,22 @@ public class JobTitleServiceImpl implements JobTitleService {
 
 	@Override
 	public void delete(Long jobtitleId) {
-		jobtitleRepository.deleteById(jobtitleId);
+		jobTitleRepository.deleteById(jobtitleId);
 
 	}
 
 	@Override
-	public JobTitle save(@Valid JobTitle jobtitle) {
+	public JobTitle save(@Valid JobTitle jobTitle) {
 		// TODO Auto-generated method stub
-		return jobtitleRepository.save(jobtitle);
+		System.out.println(" Job Title "+jobTitle);
+		return jobTitleRepository.save(jobTitle);
 	}
 
 	@Override
-	public JobTitle findByRoleName(String roleName) throws ResourceNotFoundException {
+	public JobTitle findByJobTitleName(String jobTitleName) throws ResourceNotFoundException {
 		// TODO Auto-generated method stub
-		JobTitle jobtitle = jobtitleRepository.findByRoleName(roleName)
-				.orElseThrow(() -> new ResourceNotFoundException("JobTitle not found for this id :: " + roleName));
+		JobTitle jobtitle = jobTitleRepository.findByJobTitleName(jobTitleName)
+				.orElseThrow(() -> new ResourceNotFoundException("JobTitle not found for this id :: " + jobTitleName));
 		return jobtitle;
 	}
 }

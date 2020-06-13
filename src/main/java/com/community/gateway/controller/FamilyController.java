@@ -27,7 +27,7 @@ public class FamilyController {
 	private Family_DetailsLogical familyL;
 
 	@Autowired
-	private PersonLogical personL;
+	private PersonLogical personLogical;
 
 	@PostMapping("/addGroup")
 	public ResponseEntity<MessageResponse> create(@Valid @RequestBody Family_DetailsDTO family) {
@@ -72,7 +72,7 @@ public class FamilyController {
 			@Valid @RequestBody PersonDTO person) {
 		MessageResponse msgResp;
 		try {
-			personL.save(person,groupId);
+			personLogical.save(person,groupId);
 			msgResp = new MessageResponse(true, UtilityConstant.SUCCESS);
 			return  ResponseEntity.ok().body(msgResp);
 		} catch (Exception e) {
