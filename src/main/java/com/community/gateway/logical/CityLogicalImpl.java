@@ -31,6 +31,7 @@ public class CityLogicalImpl implements CityLogical {
 	@Override
 	public CityDTO save(CityDTO cityDto) {
 		// TODO Auto-generated method stub
+		System.out.println(" cityDto :"+cityDto.getDistrictId());
 		return cityMapper.toCityDTO(cityService.save(cityMapper.toCity(cityDto)));
 
 	}
@@ -44,6 +45,12 @@ public class CityLogicalImpl implements CityLogical {
 	public void deleteCity(Long cityId) throws ResourceNotFoundException {
 		cityService.delete(cityId);
 
+	}
+
+	@Override
+	public List<CityDTO>  findByDistrictId(long districtId) throws ResourceNotFoundException {
+		// TODO Auto-generated method stub
+		return cityMapper.toCityDTOs(cityService.findByDistrictId(districtId));
 	}
 
 }

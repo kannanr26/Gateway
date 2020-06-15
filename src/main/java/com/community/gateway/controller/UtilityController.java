@@ -21,11 +21,13 @@ import com.community.gateway.dto.AssociationCommitteeDTO;
 import com.community.gateway.dto.BloodGroupDTO;
 import com.community.gateway.dto.OperatorTypeDTO;
 import com.community.gateway.dto.PermissionDTO;
+import com.community.gateway.dto.RelationShipNameDTO;
 import com.community.gateway.dto.DistrictDTO;
 import com.community.gateway.dto.StateDTO;
 import com.community.gateway.dto.CountryDTO;
 import com.community.gateway.dto.MaritalStatusDTO;
 import com.community.gateway.dto.BusinessDTO;
+import com.community.gateway.dto.CasteDTO;
 import com.community.gateway.dto.CityDTO;
 import com.community.gateway.dto.CoursesDTO;
 import com.community.gateway.dto.DeityDTO;
@@ -62,14 +64,14 @@ public class UtilityController {
 	private final EducationUtilService educationService;
 	private final JobUtilService jobService;
 	private final RoleUtilService roleService;
-	private final EnumUtilService enumService;
+	//private final EnumUtilService enumService;
 	private final ManagementUtilService managementService;
 
 	@Autowired
 	public UtilityController(FamilyUtilService familyService, AddressUtilService addressService,
 			BusinessUtilService businessService, CoursesUtilService coursesService,
 			EducationUtilService educationService, JobUtilService jobService, RoleUtilService roleService,
-			EnumUtilService enumService,PersonalUtilService personService,ManagementUtilService managementService) {
+			PersonalUtilService personService,ManagementUtilService managementService) {
 		this.familyService = familyService;
 		this.addressService = addressService;
 		this.businessService = businessService;
@@ -78,7 +80,7 @@ public class UtilityController {
 		this.jobService = jobService;
 		this.roleService = roleService;
 		this.personService=personService;
-		this.enumService = enumService;
+		//this.enumService = enumService;
 		this.managementService=managementService;
 	}
 
@@ -146,6 +148,29 @@ public class UtilityController {
 		} else
 			return ResponseEntity.badRequest().body(new MessageResponse(false, "Deleted not Successfully "));
 	}
+	@PostMapping("/addCaste")
+	public ResponseEntity<MessageResponse> addCaste(@Valid @RequestBody CasteDTO caste) {
+		if (familyService.addCaste(caste))
+			return ResponseEntity.ok().body(new MessageResponse(true, "caste added Successfully "));
+		else
+			return ResponseEntity.badRequest().body(new MessageResponse(false, "Caste not Successfully "));
+
+	}
+
+	@GetMapping("/getCastes")
+	public ResponseEntity<List<CasteDTO>> getCastes() {
+		return ResponseEntity.ok().body(familyService.getCastes());
+	}
+
+	@DeleteMapping("/deleteCaste/{id}")
+	public ResponseEntity<MessageResponse> deleteCaste(@PathVariable(value = "id") Long casteId)
+			throws ResourceNotFoundException {
+		if (familyService.deleteCaste(casteId)) {
+			System.out.println(" in If ");
+			return ResponseEntity.ok().body(new MessageResponse(true, "Deleted Successfully "));
+		} else
+			return ResponseEntity.badRequest().body(new MessageResponse(false, "Deleted not Successfully "));
+	}
 	
 	@PostMapping("/addDeity")
 	public ResponseEntity<MessageResponse> addDeity(@Valid @RequestBody DeityDTO deity) {
@@ -164,29 +189,6 @@ public class UtilityController {
 	public ResponseEntity<MessageResponse> deleteDeity(@PathVariable(value = "id") Long deityId)
 			throws ResourceNotFoundException {
 		if (familyService.deleteDeity(deityId)) {
-			System.out.println(" in If ");
-			return ResponseEntity.ok().body(new MessageResponse(true, "Deleted Successfully "));
-		} else
-			return ResponseEntity.badRequest().body(new MessageResponse(false, "Deleted not Successfully "));
-	}
-	@PostMapping("/addCity")
-	public ResponseEntity<MessageResponse> addCity(@Valid @RequestBody CityDTO city) {
-		if (addressService.addCities(city))
-			return ResponseEntity.ok().body(new MessageResponse(true, "City added Successfully "));
-		else
-			return ResponseEntity.badRequest().body(new MessageResponse(false, "City not Successfully "));
-
-	}
-
-	@GetMapping("/getCitys")
-	public ResponseEntity<List<CityDTO>> getCity() {
-		return ResponseEntity.ok().body(addressService.getCities());
-	}
-
-	@DeleteMapping("/deleteCity/{id}")
-	public ResponseEntity<MessageResponse> deleteCity(@PathVariable(value = "id") Long cityId)
-			throws ResourceNotFoundException {
-		if (addressService.deleteCity(cityId)) {
 			System.out.println(" in If ");
 			return ResponseEntity.ok().body(new MessageResponse(true, "Deleted Successfully "));
 		} else
@@ -352,7 +354,28 @@ public class UtilityController {
 	public ResponseEntity<List<EOperator>> getOpeatorTypes() {
 		return ResponseEntity.ok().body(enumService.getOperatorType());
 	}
-*/
+	 */
+	@PostMapping("/addRelationShipName")
+	public ResponseEntity<MessageResponse> addRelationShipName(@Valid @RequestBody RelationShipNameDTO relationShipName) {
+		if (personService.addRelationshipName(relationShipName))
+			return ResponseEntity.ok().body(new MessageResponse(true, "BloodGroup added Successfully "));
+		else
+			return ResponseEntity.badRequest().body(new MessageResponse(false, " BloodGroup not Successfully "));
+
+	}
+
+	@GetMapping("/getRelationShipNames")
+	public ResponseEntity<List<RelationShipNameDTO>> getRelationShipNames() {
+		return ResponseEntity.ok().body(personService.getRelationShipNames());
+	}
+	@DeleteMapping("/deleteRelationShipName/{id}")
+	public ResponseEntity<MessageResponse> deleteRelationShipName(@PathVariable(value = "id") Long RelationShipNameId)
+			throws ResourceNotFoundException {
+		if (personService.deleteRelationshipName(RelationShipNameId)) {
+			return ResponseEntity.ok().body(new MessageResponse(true, "Deleted Successfully "));
+		} else
+			return ResponseEntity.badRequest().body(new MessageResponse(false, "Deleted not Successfully "));
+	}
 	@PostMapping("/addMaritalStatus")
 	public ResponseEntity<MessageResponse> addMaritalStatus(@Valid @RequestBody MaritalStatusDTO maritalStatus) {
 		if (personService.addMaritalStatus(maritalStatus))
@@ -371,6 +394,29 @@ public class UtilityController {
 	public ResponseEntity<MessageResponse> deleteMaritalStatus(@PathVariable(value = "id") Long maritalStatusId)
 			throws ResourceNotFoundException {
 		if (personService.deleteMaritalStatus(maritalStatusId)) {
+			return ResponseEntity.ok().body(new MessageResponse(true, "Deleted Successfully "));
+		} else
+			return ResponseEntity.badRequest().body(new MessageResponse(false, "Deleted not Successfully "));
+	}
+	@PostMapping("/addCity")
+	public ResponseEntity<MessageResponse> addCity(@Valid @RequestBody CityDTO city) {
+		if (addressService.addCities(city))
+			return ResponseEntity.ok().body(new MessageResponse(true, "City added Successfully "));
+		else
+			return ResponseEntity.badRequest().body(new MessageResponse(false, "City not Successfully "));
+
+	}
+
+	@GetMapping("/getCitys/{id}")
+	public ResponseEntity<List<CityDTO>> getCity(@PathVariable(value = "id") Long districtId) {
+		return ResponseEntity.ok().body(addressService.getCities(districtId));
+	}
+
+	@DeleteMapping("/deleteCity/{id}")
+	public ResponseEntity<MessageResponse> deleteCity(@PathVariable(value = "id") Long cityId)
+			throws ResourceNotFoundException {
+		if (addressService.deleteCity(cityId)) {
+			System.out.println(" in If ");
 			return ResponseEntity.ok().body(new MessageResponse(true, "Deleted Successfully "));
 		} else
 			return ResponseEntity.badRequest().body(new MessageResponse(false, "Deleted not Successfully "));
@@ -408,9 +454,9 @@ public class UtilityController {
 
 	}
 
-	@GetMapping("/getStates")
-	public ResponseEntity<List<StateDTO>> getState() {
-		return ResponseEntity.ok().body(addressService.getStates());
+	@GetMapping("/getStates/{id}")
+	public ResponseEntity<List<StateDTO>> getState(@PathVariable(value = "id") Long countryId) {
+		return ResponseEntity.ok().body(addressService.getStates(countryId));
 	}
 
 	@DeleteMapping("/deleteState/{id}")
@@ -431,9 +477,9 @@ public class UtilityController {
 
 	}
 
-	@GetMapping("/getDistricts")
-	public ResponseEntity<List<DistrictDTO>> getDistrict() {
-		return ResponseEntity.ok().body(addressService.getDistricts());
+	@GetMapping("/getDistricts/{id}")
+	public ResponseEntity<List<DistrictDTO>> getDistrict(@PathVariable(value = "id") Long stateId) {
+		return ResponseEntity.ok().body(addressService.getDistricts(stateId));
 	}
 
 	@DeleteMapping("/deleteDistrict/{id}")

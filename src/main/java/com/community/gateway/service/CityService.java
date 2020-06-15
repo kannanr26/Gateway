@@ -16,4 +16,6 @@ public interface CityService {
 	void delete(Long cityId);
 
 	City save(@Valid City city);
+
+	List<City> findByDistrictId(long districtId);
 }

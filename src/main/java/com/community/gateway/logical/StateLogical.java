@@ -17,4 +17,6 @@ public interface StateLogical {
 
 	StateDTO save(@Valid StateDTO stateDto);
 
+	List<StateDTO> findAllByCountryId(Long countryId);
+
 }

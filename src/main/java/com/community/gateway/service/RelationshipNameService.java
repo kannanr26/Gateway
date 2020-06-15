@@ -5,15 +5,15 @@ import java.util.List;
 import javax.validation.Valid;
 
 import com.community.gateway.exception.ResourceNotFoundException;
-import com.community.gateway.model.RelationshipName;
+import com.community.gateway.model.RelationShipName;
 
 public interface RelationshipNameService {
 
-	RelationshipName findById(Long relationshipnameId) throws ResourceNotFoundException;
+	RelationShipName findById(Long relationshipnameId) throws ResourceNotFoundException;
 
-	List<RelationshipName> findAll();
+	List<RelationShipName> findAll();
 
 	void delete(Long relationshipnameId);
 
-	RelationshipName save(@Valid RelationshipName relationshipname);
+	RelationShipName save(@Valid RelationShipName relationshipname);
 }

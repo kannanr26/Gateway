@@ -11,10 +11,12 @@ public interface DistrictLogical {
 
 	List<DistrictDTO> findAll();
 
-	DistrictDTO findById(Long districtId)throws ResourceNotFoundException;
+	DistrictDTO findById(Long districtId) throws ResourceNotFoundException;
 
 	void delete(Long districtId) throws ResourceNotFoundException;
 
 	DistrictDTO save(@Valid DistrictDTO districtDto);
+
+	List<DistrictDTO> findAllByStateId(Long stateId);
 
 }

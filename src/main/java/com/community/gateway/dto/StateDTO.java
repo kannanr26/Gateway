@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class StateDTO {
 	private long id;
-	private long idCountry;
+	private long countryId;
 	private String stateName;
 }

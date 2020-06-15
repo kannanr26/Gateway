@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.community.gateway.exception.ResourceNotFoundException;
-import com.community.gateway.model.RelationshipName;
+import com.community.gateway.model.RelationShipName;
 import com.community.gateway.model.repo.RelationshipNameRepository;
 
 @Service
@@ -19,18 +19,18 @@ public class RelationshipNameServiceImpl implements RelationshipNameService {
 	RelationshipNameRepository relationshipNameRepository;
 	
 	@Override
-	public RelationshipName findById(Long relationshipnameId) throws ResourceNotFoundException {
+	public RelationShipName findById(Long relationshipnameId) throws ResourceNotFoundException {
 		// TODO Auto-generated method stub
 
-		RelationshipName relationshipname = relationshipNameRepository.findById(relationshipnameId)
+		RelationShipName relationshipname = relationshipNameRepository.findById(relationshipnameId)
 				.orElseThrow(() -> new ResourceNotFoundException("Operator not found for this id :: " + relationshipnameId));
 		return relationshipname;
 	}
 
 	@Override
-	public List<RelationshipName> findAll() {
-		List<RelationshipName> list = new ArrayList<>();
-		Iterable<RelationshipName> customers = relationshipNameRepository.findAll();
+	public List<RelationShipName> findAll() {
+		List<RelationShipName> list = new ArrayList<>();
+		Iterable<RelationShipName> customers = relationshipNameRepository.findAll();
 
 		customers.forEach(list::add);
 		return list;
@@ -44,7 +44,7 @@ public class RelationshipNameServiceImpl implements RelationshipNameService {
 	}
 
 	@Override
-	public RelationshipName save(@Valid RelationshipName relationshipname) {
+	public RelationShipName save(@Valid RelationShipName relationshipname) {
 		// TODO Auto-generated method stub
 		return relationshipNameRepository.save(relationshipname);
 	}

@@ -4,13 +4,13 @@ import java.util.List;
 
 import org.mapstruct.Mapper;
 
-import com.community.gateway.dto.RelationshipNameDTO;
-import com.community.gateway.model.RelationshipName;
+import com.community.gateway.dto.RelationShipNameDTO;
+import com.community.gateway.model.RelationShipName;
 @Mapper(componentModel = "spring")
 public interface RelationshipNameMapper {
-	RelationshipNameDTO toRelationshipNameDTO(RelationshipName relationshipname);
+	RelationShipNameDTO toRelationshipNameDTO(RelationShipName relationshipname);
 
-    List<RelationshipNameDTO> toRelationshipNameDTOs(List<RelationshipName> relationshipname);
+    List<RelationShipNameDTO> toRelationshipNameDTOs(List<RelationShipName> relationshipname);
 
-    RelationshipName toRelationshipName(RelationshipNameDTO relationshipnameDTO);
+    RelationShipName toRelationshipName(RelationShipNameDTO relationshipnameDTO);
 }

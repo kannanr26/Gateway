@@ -4,9 +4,9 @@ import org.springframework.data.repository.CrudRepository;
 
 import org.springframework.stereotype.Repository;
 
-import com.community.gateway.model.RelationshipName;
+import com.community.gateway.model.RelationShipName;
 
 @Repository
-public interface RelationshipNameRepository extends CrudRepository<RelationshipName, Long> {
+public interface RelationshipNameRepository extends CrudRepository<RelationShipName, Long> {
 
 }

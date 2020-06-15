@@ -8,11 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.community.gateway.dto.BloodGroupDTO;
 import com.community.gateway.dto.MaritalStatusDTO;
-import com.community.gateway.dto.RelationshipNameDTO;
+import com.community.gateway.dto.RelationShipNameDTO;
 import com.community.gateway.exception.ResourceNotFoundException;
 import com.community.gateway.logical.BloodGroupLogical;
 import com.community.gateway.logical.MaritalStatusLogical;
-import com.community.gateway.logical.RelationShipsLogical;
 import com.community.gateway.logical.RelationshipNameLogical;
 
 @Service
@@ -20,7 +19,7 @@ public class PersonalUtilService {
 
 	private static final List<BloodGroupDTO> bloodGroups = new ArrayList<BloodGroupDTO>();
 	private static final List<MaritalStatusDTO> maritalStatuses = new ArrayList<MaritalStatusDTO>();
-	private static final List<RelationshipNameDTO> relationshipName = new ArrayList<RelationshipNameDTO>();
+	private static final List<RelationShipNameDTO> relationshipName = new ArrayList<RelationShipNameDTO>();
 
 	private final BloodGroupLogical bloodGroupLogical;
 	private final MaritalStatusLogical maritalStatusLogical;
@@ -93,17 +92,17 @@ public class PersonalUtilService {
 			return false;
 		}
 	}
-	public List<RelationshipNameDTO> getRelationshipNames() {
+	public List<RelationShipNameDTO> getRelationShipNames() {
 		if (relationshipName.isEmpty()) {
 			relationshipName.addAll(relationShipNamelogical.findAll());
 		}
 		return relationshipName;
 	}
 
-	public boolean addRelationshipName(RelationshipNameDTO relationshipNameDTO) {
-		if (getRelationshipNames().stream()
+	public boolean addRelationshipName(RelationShipNameDTO relationshipNameDTO) {
+		if (getRelationShipNames().stream()
 				.noneMatch(x -> x.getRelationshipName().equalsIgnoreCase(relationshipNameDTO.getRelationshipName()))) { 
-			RelationshipNameDTO relationshipNameNew = relationShipNamelogical.save(relationshipNameDTO);
+			RelationShipNameDTO relationshipNameNew = relationShipNamelogical.save(relationshipNameDTO);
 			relationshipName.add(relationshipNameNew);
 			return true;
 		}

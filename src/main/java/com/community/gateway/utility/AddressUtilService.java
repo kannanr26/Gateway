@@ -18,66 +18,62 @@ import com.community.gateway.logical.StateLogical;
 
 @Service
 public class AddressUtilService {
-	private  final static List<CityDTO> cities = new ArrayList<CityDTO>();
-	private static final List<CountryDTO> countries = new ArrayList<CountryDTO>();
-	private static final List<StateDTO> states = new ArrayList<StateDTO>();
-	private static final List<DistrictDTO> districts = new ArrayList<DistrictDTO>();
+	/**/
 
-	
 	private final CityLogical cityLogical;
 	private final CountryLogical countryLogical;
 	private final StateLogical stateLogical;
 	private final DistrictLogical districtLogical;
 
 	@Autowired
-	public AddressUtilService (CityLogical cityLogical,CountryLogical countryLogical, StateLogical stateLogical,DistrictLogical districtLogical) {
+	public AddressUtilService(CityLogical cityLogical, CountryLogical countryLogical, StateLogical stateLogical,
+			DistrictLogical districtLogical) {
 		this.cityLogical = cityLogical;
-		this.countryLogical=countryLogical;
-		this.stateLogical=stateLogical;
-		this.districtLogical=districtLogical;
-	}
-	
-	public List<CityDTO> getCities() {
-		if (cities.isEmpty()) {
-			cities.addAll(this.cityLogical.findAll());
-		}
-		return cities;
+		this.countryLogical = countryLogical;
+		this.stateLogical = stateLogical;
+		this.districtLogical = districtLogical;
 	}
 
-	public boolean addCities(CityDTO citiesDTO) {
-		System.out.println("  gothiramDTO" + citiesDTO.getCityName());
-		if (getCities().stream().noneMatch(x -> x.getCityName().equalsIgnoreCase(citiesDTO.getCityName()))) {
-				System.out.println(" inside  if city DTO");
-			CityDTO citySaved = this.cityLogical.save(citiesDTO);
-			cities.add(citySaved);
+	public List<CityDTO> getCities(Long districtId) {
+		try {
+			return cityLogical.findByDistrictId(districtId);
+		} catch (ResourceNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ArrayList<CityDTO>(1);
+
+	}
+
+	public boolean addCities(CityDTO cityDTO) {
+		System.out.println("  CityDTO" + cityDTO.getCityName()+" cityDTO.getDistrictId()"+cityDTO.getDistrictId());
+		if (getCities(cityDTO.getDistrictId()).stream()
+				.noneMatch(x -> x.getCityName().equalsIgnoreCase(cityDTO.getCityName()))) {
+			System.out.println(" inside  if city DTO");
+			cityLogical.save(cityDTO);
 			return true;
 		}
 		return false;
 	}
 
 	public boolean deleteCity(Long cityId) {
-		 try {
-			 cities.remove(cityLogical.findById(cityId));
-			 cityLogical.deleteCity(cityId);
-				return true;
-			} catch (ResourceNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return false;
-			}
-	}
-	public List<CountryDTO> getCountries() {
-		if (countries.isEmpty()) {
-			countries.addAll(countryLogical.findAll());
+		try {
+			cityLogical.deleteCity(cityId);
+			return true;
+		} catch (ResourceNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
 		}
-		return countries;
+	}
+
+	public List<CountryDTO> getCountries() {
+		return countryLogical.findAll();
 	}
 
 	public boolean addCountry(CountryDTO countryDTO) {
-		if (getCountries().stream()
-				.noneMatch(x -> x.getCountryName().equalsIgnoreCase(countryDTO.getCountryName()))) { 
-			CountryDTO country = countryLogical.save(countryDTO);
-			countries.add(country);
+		if (getCountries().stream().noneMatch(x -> x.getCountryName().equalsIgnoreCase(countryDTO.getCountryName()))) {
+			countryLogical.save(countryDTO);
 			return true;
 		}
 		return false;
@@ -86,7 +82,6 @@ public class AddressUtilService {
 	public boolean deleteCountry(Long countryId) {
 		// TODO Auto-generated method stub
 		try {
-			countries.remove(countryLogical.findById(countryId));
 			countryLogical.delete(countryId);
 			return true;
 		} catch (ResourceNotFoundException e) {
@@ -96,19 +91,15 @@ public class AddressUtilService {
 		}
 	}
 
-
-	public List<StateDTO> getStates() {
-		if (states.isEmpty()) {
-			states.addAll(stateLogical.findAll());
-		}
-		return states;
+	public List<StateDTO> getStates(Long countryId) {
+		return stateLogical.findAllByCountryId(countryId);
 	}
 
 	public boolean addState(StateDTO stateDTO) {
-		if (getStates().stream()
-				.noneMatch(x -> x.getStateName().equalsIgnoreCase(stateDTO.getStateName()))) { 
-			StateDTO state = stateLogical.save(stateDTO);
-			states.add(state);
+		if (getStates(stateDTO.getCountryId()).stream()
+				.noneMatch(x -> x.getStateName().equalsIgnoreCase(stateDTO.getStateName()))) {
+			stateLogical.save(stateDTO);
+
 			return true;
 		}
 		return false;
@@ -117,7 +108,6 @@ public class AddressUtilService {
 	public boolean deleteState(Long stateId) {
 		// TODO Auto-generated method stub
 		try {
-			states.remove(stateLogical.findById(stateId));
 			stateLogical.delete(stateId);
 			return true;
 		} catch (ResourceNotFoundException e) {
@@ -127,21 +117,14 @@ public class AddressUtilService {
 		}
 	}
 
-	public List<DistrictDTO> getDistricts() {
-		if (districts.isEmpty()) {
-			districts.addAll(districtLogical.findAll());
-		}
-		return districts;
+	public List<DistrictDTO> getDistricts(Long stateId) {
+		return districtLogical.findAllByStateId(stateId);
 	}
 
 	public boolean addDistrict(DistrictDTO districtDTO) {
-		if (getDistricts().stream().noneMatch(x -> x.getDistrictName().equalsIgnoreCase(districtDTO.getDistrictName())  )){
-		//		&& x.getStateId().equals(districtDTO.getStateId()) )) { 
-			
-			
-			
-			DistrictDTO district = districtLogical.save(districtDTO);
-			districts.add(district);
+		if (getDistricts(districtDTO.getStateId()).stream()
+				.noneMatch(x -> x.getDistrictName().equalsIgnoreCase(districtDTO.getDistrictName()))) {
+			districtLogical.save(districtDTO);
 			return true;
 		}
 		return false;
@@ -150,7 +133,6 @@ public class AddressUtilService {
 	public boolean deleteDistrict(Long districtId) {
 		// TODO Auto-generated method stub
 		try {
-			districts.remove(districtLogical.findById(districtId));
 			districtLogical.delete(districtId);
 			return true;
 		} catch (ResourceNotFoundException e) {

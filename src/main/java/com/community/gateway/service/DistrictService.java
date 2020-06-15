@@ -16,4 +16,6 @@ public interface DistrictService {
 	void delete(Long districtId);
 
 	District save(@Valid District district);
+
+	List<District> findAllByStateId(Long stateId);
 }

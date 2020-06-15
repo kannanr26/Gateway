@@ -46,4 +46,10 @@ public class StateLogicalImpl implements StateLogical {
 
 	}
 
+	@Override
+	public List<StateDTO> findAllByCountryId(Long countryId) {
+		// TODO Auto-generated method stub
+		return stateMapper.toStateDTOs(stateService.findAllByCountryId(countryId));
+	}
+
 }

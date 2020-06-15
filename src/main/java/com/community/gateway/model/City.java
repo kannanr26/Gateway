@@ -6,11 +6,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import lombok.Data;
 
 @Entity
-@Table(name = "CITY")
+@Table(name = "CITY", uniqueConstraints = {@UniqueConstraint(columnNames = {"DISTRICTID", "CITYNAME"})})
 @Data
 public class City {
 
@@ -19,6 +20,8 @@ public class City {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "CITYID", nullable = false)
 	private long id;
-	@Column(name = "CITYNAME", unique = true, nullable = false)
+	@Column(name = "DISTRICTID", nullable = false)
+	private long districtId;
+	@Column(name = "CITYNAME", nullable = false)
 	private String cityName;
 }

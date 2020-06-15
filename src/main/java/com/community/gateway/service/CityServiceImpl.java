@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.community.gateway.exception.ResourceNotFoundException;
 import com.community.gateway.model.City;
+import com.community.gateway.model.State;
 import com.community.gateway.model.repo.CityRepository;
 
 @Service
@@ -23,16 +24,15 @@ public class CityServiceImpl implements CityService {
 		// TODO Auto-generated method stub
 
 		City city = cityRepository.findById(cityId)
-				.orElseThrow(() -> new ResourceNotFoundException("Operator not found for this id :: " + cityId));
+				.orElseThrow(() -> new ResourceNotFoundException("City not found for this id :: " + cityId));
 		return city;
 	}
 
 	@Override
 	public List<City> findAll() {
 		List<City> list = new ArrayList<>();
-		Iterable<City> customers = cityRepository.findAll();
-
-		customers.forEach(list::add);
+		Iterable<City> cities = cityRepository.findAll();
+		cities.forEach(list::add);
 		return list;
 
 	}
@@ -47,5 +47,17 @@ public class CityServiceImpl implements CityService {
 	public City save(@Valid City city) {
 		// TODO Auto-generated method stub
 		return cityRepository.save(city);
+	}
+
+	@Override
+	public List<City> findByDistrictId(long districtId) {
+		
+		List<City> list = new ArrayList<>();
+		System.out.println("districtId"+districtId);
+		Iterable<City> customers = cityRepository.findAllByDistrictId(districtId);
+
+		customers.forEach(list::add);
+		return list;
+
 	}
 }

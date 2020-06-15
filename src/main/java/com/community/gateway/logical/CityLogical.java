@@ -11,7 +11,7 @@ public interface CityLogical {
 
 	CityDTO findById(Long cityId)throws ResourceNotFoundException;
 	//CityDTO findByName(String cityName)throws ResourceNotFoundException;
-
+	List<CityDTO> findByDistrictId(long districtId)throws ResourceNotFoundException;
 	CityDTO save( CityDTO cityDTO);
 
 	void deleteCity(Long cityId) throws ResourceNotFoundException;

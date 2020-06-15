@@ -7,14 +7,14 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.community.gateway.dto.RelationshipNameDTO;
+import com.community.gateway.dto.RelationShipNameDTO;
 import com.community.gateway.exception.ResourceNotFoundException;
 import com.community.gateway.mapper.RelationshipNameMapper;
-import com.community.gateway.model.RelationshipName;
+import com.community.gateway.model.RelationShipName;
 import com.community.gateway.service.RelationshipNameService;
 
 @Service
-public class RelationshipNameLogicalImpl implements RelationshipNameLogical {
+public class RelationShipNameLogicalImpl implements RelationshipNameLogical {
 
 	@Autowired
 	RelationshipNameService relationshipNameService;
@@ -24,18 +24,18 @@ public class RelationshipNameLogicalImpl implements RelationshipNameLogical {
 	
 
 	@Override
-	public List<RelationshipNameDTO> findAll() {
+	public List<RelationShipNameDTO> findAll() {
 		// TODO Auto-generated method stub
 		return relationshipNameMapper.toRelationshipNameDTOs(relationshipNameService.findAll());
 	}
 
 	@Override
-	public RelationshipNameDTO findById(Long relationshipnameId) throws ResourceNotFoundException {
+	public RelationShipNameDTO findById(Long relationshipnameId) throws ResourceNotFoundException {
 		return relationshipNameMapper.toRelationshipNameDTO(relationshipNameService.findById(relationshipnameId));
 	}
 
 	@Override
-	public RelationshipNameDTO save(@Valid RelationshipNameDTO relationshipnameDto) {
+	public RelationShipNameDTO save(@Valid RelationShipNameDTO relationshipnameDto) {
 		// TODO Auto-generated method stub
 		return relationshipNameMapper.toRelationshipNameDTO(relationshipNameService.save(relationshipNameMapper.toRelationshipName(relationshipnameDto)));
 		

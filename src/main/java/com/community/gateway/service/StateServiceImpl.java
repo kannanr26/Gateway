@@ -46,7 +46,18 @@ public class StateServiceImpl implements StateService {
 	@Override
 	public State save(@Valid State state) {
 		// TODO Auto-generated method stub
-		System.out.println(" state :"+state.getStateName());
+		System.out.println(" state :" + state.getStateName());
 		return stateRepository.save(state);
+	}
+
+	@Override
+	public List<State> findAllByCountryId(Long countryId) {
+		List<State> list = new ArrayList<>();
+		System.out.println("Country Id"+countryId);
+		Iterable<State> customers = stateRepository.findAllByCountryId(countryId);
+
+		customers.forEach(list::add);
+		return list;
+
 	}
 }

@@ -46,7 +46,19 @@ public class DistrictServiceImpl implements DistrictService {
 	@Override
 	public District save(@Valid District district) {
 		// TODO Auto-generated method stub
-		System.out.println(" district :"+district.getDistrictName());
+		System.out.println(" district :" + district.getDistrictName());
 		return districtRepository.save(district);
+	}
+
+	@Override
+	public List<District> findAllByStateId(Long stateId) {
+		// TODO Auto-generated method stub
+
+		List<District> list = new ArrayList<>();
+		System.out.println("StateId:"+stateId);
+		Iterable<District> customers = districtRepository.findAllByStateId(stateId);
+
+		customers.forEach(list::add);
+		return list;
 	}
 }

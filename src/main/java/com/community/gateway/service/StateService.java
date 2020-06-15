@@ -16,4 +16,6 @@ public interface StateService {
 	void delete(Long stateId);
 
 	State save(@Valid State state);
+
+	List<State> findAllByCountryId(Long countryId);
 }

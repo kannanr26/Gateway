@@ -46,4 +46,10 @@ public class DistrictLogicalImpl implements DistrictLogical {
 
 	}
 
+	@Override
+	public List<DistrictDTO> findAllByStateId(Long stateId) {
+		// TODO Auto-generated method stub
+		return districtMapper.toDistrictDTOs(districtService.findAllByStateId(stateId));
+	}
+
 }

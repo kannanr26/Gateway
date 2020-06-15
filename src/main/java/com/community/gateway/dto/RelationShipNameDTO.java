@@ -3,7 +3,7 @@ package com.community.gateway.dto;
 import lombok.Data;
 
 @Data
-public class RelationshipNameDTO {
+public class RelationShipNameDTO {
 	private long id;
 	private String relationshipName;
 }
