@@ -4,21 +4,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.community.gateway.dto.CityDTO;
 import com.community.gateway.dto.CountryDTO;
 import com.community.gateway.dto.DistrictDTO;
+import com.community.gateway.dto.GothiramDTO;
 import com.community.gateway.dto.StateDTO;
 import com.community.gateway.exception.ResourceNotFoundException;
+import com.community.gateway.jwt.response.MessageResponse;
 import com.community.gateway.logical.CityLogical;
 import com.community.gateway.logical.CountryLogical;
 import com.community.gateway.logical.DistrictLogical;
 import com.community.gateway.logical.StateLogical;
+import com.community.gateway.logical.Utility;
 
 @Service
 public class AddressUtilService {
 	/**/
+	private static final List<CountryDTO> countrys = new ArrayList<CountryDTO>();
 
 	private final CityLogical cityLogical;
 	private final CountryLogical countryLogical;
@@ -45,15 +50,18 @@ public class AddressUtilService {
 
 	}
 
-	public boolean addCities(CityDTO cityDTO) {
-		System.out.println("  CityDTO" + cityDTO.getCityName()+" cityDTO.getDistrictId()"+cityDTO.getDistrictId());
+	public ResponseEntity<MessageResponse> addCities(CityDTO cityDTO) {
 		if (getCities(cityDTO.getDistrictId()).stream()
 				.noneMatch(x -> x.getCityName().equalsIgnoreCase(cityDTO.getCityName()))) {
-			System.out.println(" inside  if city DTO");
-			cityLogical.save(cityDTO);
-			return true;
+			CityDTO cityDtoSaved = cityLogical.save(cityDTO);
+			if (cityDTO.getId() == 0)
+				return ResponseEntity.ok().body(new MessageResponse(cityDtoSaved, true, UtilityConstant.SUCCESS));
+			else
+				return ResponseEntity.ok().body(new MessageResponse(true, UtilityConstant.UPDATED_SUCCESS));
+
 		}
-		return false;
+		return ResponseEntity.badRequest().body(new MessageResponse(false, UtilityConstant.FAILED));
+
 	}
 
 	public boolean deleteCity(Long cityId) {
@@ -68,21 +76,40 @@ public class AddressUtilService {
 	}
 
 	public List<CountryDTO> getCountries() {
-		return countryLogical.findAll();
+		if (countrys.isEmpty())
+			countrys.addAll(countryLogical.findAll());
+		return countrys;
 	}
 
-	public boolean addCountry(CountryDTO countryDTO) {
+	public ResponseEntity<MessageResponse> addCountry(CountryDTO countryDTO) {
+		try {
 		if (getCountries().stream().noneMatch(x -> x.getCountryName().equalsIgnoreCase(countryDTO.getCountryName()))) {
-			countryLogical.save(countryDTO);
-			return true;
+			 CountryDTO countryDTOSaved =countryLogical.save(countryDTO);
+			 refreshCountry();
+			 if(countryDTO.getId()==0) 
+					return ResponseEntity.ok().body(new MessageResponse(countryDTOSaved,true, UtilityConstant.SUCCESS));
+			else
+						return ResponseEntity.ok().body(new MessageResponse(true, UtilityConstant.UPDATED_SUCCESS));
+						
+			 }
+		}catch (Exception e) {
+			
 		}
-		return false;
+		return ResponseEntity.badRequest().body(new MessageResponse(false,UtilityConstant.FAILED));
+
+	}
+
+	private void refreshCountry() {
+		// TODO Auto-generated method stub
+		countrys.clear();
+		countrys.addAll(getCountries());
+
 	}
 
 	public boolean deleteCountry(Long countryId) {
-		// TODO Auto-generated method stub
 		try {
 			countryLogical.delete(countryId);
+			refreshCountry();
 			return true;
 		} catch (ResourceNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -95,14 +122,17 @@ public class AddressUtilService {
 		return stateLogical.findAllByCountryId(countryId);
 	}
 
-	public boolean addState(StateDTO stateDTO) {
+	public ResponseEntity<MessageResponse> addState(StateDTO stateDTO) {
 		if (getStates(stateDTO.getCountryId()).stream()
 				.noneMatch(x -> x.getStateName().equalsIgnoreCase(stateDTO.getStateName()))) {
-			stateLogical.save(stateDTO);
-
-			return true;
+			StateDTO stateSaved=stateLogical.save(stateDTO);
+			if(stateDTO.getId()==0)
+				return ResponseEntity.ok().body(new MessageResponse(stateSaved,true,UtilityConstant.SUCCESS));
+			else
+				return ResponseEntity.ok().body(new MessageResponse(true,UtilityConstant.UPDATED_SUCCESS));
 		}
-		return false;
+		return ResponseEntity.badRequest().body(new MessageResponse(false, UtilityConstant.FAILED));
+
 	}
 
 	public boolean deleteState(Long stateId) {
@@ -121,13 +151,18 @@ public class AddressUtilService {
 		return districtLogical.findAllByStateId(stateId);
 	}
 
-	public boolean addDistrict(DistrictDTO districtDTO) {
+	public ResponseEntity<MessageResponse> addDistrict(DistrictDTO districtDTO) {
 		if (getDistricts(districtDTO.getStateId()).stream()
 				.noneMatch(x -> x.getDistrictName().equalsIgnoreCase(districtDTO.getDistrictName()))) {
-			districtLogical.save(districtDTO);
-			return true;
+			DistrictDTO districtSaved=districtLogical.save(districtDTO);
+			if(districtDTO.getId()==0)
+				return ResponseEntity.ok().body(new MessageResponse(districtSaved,true, UtilityConstant.SUCCESS));
+			else
+				return ResponseEntity.ok().body(new MessageResponse(true, UtilityConstant.UPDATED_SUCCESS));
 		}
-		return false;
+		
+		return ResponseEntity.badRequest().body(new MessageResponse(false,UtilityConstant.FAILED));
+
 	}
 
 	public boolean deleteDistrict(Long districtId) {

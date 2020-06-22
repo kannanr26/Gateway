@@ -4,14 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.community.gateway.dto.CasteDTO;
 import com.community.gateway.dto.DeityDTO;
 import com.community.gateway.dto.GothiramDTO;
 import com.community.gateway.dto.KulamDTO;
-import com.community.gateway.dto.RelationShipNameDTO;
 import com.community.gateway.exception.ResourceNotFoundException;
+import com.community.gateway.jwt.response.MessageResponse;
 import com.community.gateway.logical.CasteLogical;
 import com.community.gateway.logical.DeityLogical;
 import com.community.gateway.logical.GothiramLogical;
@@ -25,23 +26,20 @@ public class FamilyUtilService {
 	private static final List<KulamDTO> kulams = new ArrayList<KulamDTO>();
 	private static final List<DeityDTO> deitys = new ArrayList<DeityDTO>();
 	private static final List<CasteDTO> castes = new ArrayList<CasteDTO>();
-	private static final List<RelationShipNameDTO> relationShips = new ArrayList<RelationShipNameDTO>();
 
 	private final GothiramLogical gothiramLogical;
 	private final KulamLogical kulamLogical;
 	private final DeityLogical deityLogical;
 	private final CasteLogical casteLogical;
-	private final RelationshipNameLogical relationShipNameLogical;
 
 	@Autowired
 	public FamilyUtilService(GothiramLogical gothiramLogical, KulamLogical kulamLogical, DeityLogical deityLogical,
-			CasteLogical casteLogical,RelationshipNameLogical relationShipNameLogical) {
+			CasteLogical casteLogical, RelationshipNameLogical relationShipNameLogical) {
 
 		this.gothiramLogical = gothiramLogical;
 		this.kulamLogical = kulamLogical;
 		this.deityLogical = deityLogical;
 		this.casteLogical = casteLogical;
-		this.relationShipNameLogical=relationShipNameLogical;
 	}
 
 	public List<GothiramDTO> getGothirams() {
@@ -51,16 +49,24 @@ public class FamilyUtilService {
 		return gothirams;
 	}
 
-	public boolean addGothirams(GothiramDTO gothiramDTO) {
-		System.out.println("  gothiramDTO" + gothiramDTO.getGothiramName());
+	public ResponseEntity<MessageResponse> addGothirams(GothiramDTO gothiramDTO) {
 		if (getGothirams().stream()
 				.noneMatch(x -> x.getGothiramName().equalsIgnoreCase(gothiramDTO.getGothiramName()))) {
-			System.out.println(" inside  if gothiramDTO");
-			GothiramDTO gothiram = gothiramLogical.save(gothiramDTO);
-			gothirams.add(gothiram);
-			return true;
+			GothiramDTO gothiramSaved = gothiramLogical.save(gothiramDTO);
+			refreshGothirm();
+			if(gothiramDTO.getId()==0)
+				return ResponseEntity.ok().body(new MessageResponse(gothiramSaved, true, UtilityConstant.SUCCESS));
+			else
+				return ResponseEntity.ok().body(new MessageResponse( true,UtilityConstant.UPDATED_SUCCESS ));
 		}
-		return false;
+	return ResponseEntity.badRequest().body(new MessageResponse(false,UtilityConstant.FAILED));
+
+	}
+
+	private void refreshGothirm() {
+		// TODO Auto-generated method stub
+		gothirams.clear();
+		gothirams.addAll(getGothirams());
 	}
 
 	public List<KulamDTO> getKulams() {
@@ -70,14 +76,25 @@ public class FamilyUtilService {
 		return kulams;
 	}
 
-	public boolean addKulams(KulamDTO kulamDTO) {
-		if (getKulams().stream().noneMatch(x -> x.getKulamName().equalsIgnoreCase(kulamDTO.getKulamName()))) {
-			KulamDTO kulam = kulamLogical.save(kulamDTO);
-			kulams.add(kulam);
-			return true;
-		}
-		return false;
+	public ResponseEntity<MessageResponse> addKulams(KulamDTO kulamDTO) {
+		try {
+			if (getKulams().stream().noneMatch(x -> x.getKulamName().equalsIgnoreCase(kulamDTO.getKulamName()))) {
+				KulamDTO kulamDTOSaved = kulamLogical.save(kulamDTO);
+				refreshKulam();
+				if(kulamDTO.getId()==0)
+					return ResponseEntity.ok().body(new MessageResponse(kulamDTOSaved, true, UtilityConstant.SUCCESS));
+				else
+					return ResponseEntity.ok().body(new MessageResponse( true, UtilityConstant.UPDATED_SUCCESS));
+			}
+		} catch (Exception e) {
 
+		}
+		return ResponseEntity.badRequest().body(new MessageResponse(false,UtilityConstant.FAILED));
+	}
+
+	private void refreshKulam() {
+		kulams.clear();
+		getKulams();
 	}
 
 	public List<DeityDTO> getDeitys() {
@@ -87,21 +104,30 @@ public class FamilyUtilService {
 		return deitys;
 	}
 
-	public boolean addDeitys(DeityDTO deityDTO) {
+	public ResponseEntity<MessageResponse> addDeitys(DeityDTO deityDTO) {
 
-		if (getDeitys().stream().noneMatch(x -> x.getDeityName().equalsIgnoreCase(deityDTO.getDeityName()))) { 
-			DeityDTO deity = deityLogical.save(deityDTO);
-			deitys.add(deity);
-			return true;
+		if (getDeitys().stream().noneMatch(x -> x.getDeityName().equalsIgnoreCase(deityDTO.getDeityName()))) {
+			DeityDTO deitySaved = deityLogical.save(deityDTO);
+			refreshDeity();
+			if(deityDTO.getId()==0)
+				return ResponseEntity.ok().body(new MessageResponse(deitySaved,true, UtilityConstant.SUCCESS ));
+			else
+				return ResponseEntity.ok().body(new MessageResponse(true, UtilityConstant.UPDATED_SUCCESS ));
 		}
-		return false;
+		return ResponseEntity.badRequest().body(new MessageResponse(false, UtilityConstant.FAILED));
+		
+	}
+
+	private void refreshDeity() {
+		// TODO Auto-generated method stub
+		deitys.clear();
+		deitys.addAll(getDeitys());
 	}
 
 	public boolean deleteKulams(Long kulamId) {
-		// TODO Auto-generated method stub
 		try {
-			kulams.remove(kulamLogical.findById(kulamId));
 			kulamLogical.delete(kulamId);
+			refreshKulam();
 			return true;
 		} catch (ResourceNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -117,20 +143,31 @@ public class FamilyUtilService {
 		return castes;
 	}
 
-	public boolean addCaste(CasteDTO casteDTO) {
+	public ResponseEntity<MessageResponse> addCaste(CasteDTO casteDTO) {
 		if (getCastes().stream().noneMatch(x -> x.getCasteName().equalsIgnoreCase(casteDTO.getCasteName()))) {
-			CasteDTO caste = casteLogical.save(casteDTO);
-			castes.add(caste);
-			return true;
+			CasteDTO casteSaved = casteLogical.save(casteDTO);
+			refreshCaste();
+			if(casteDTO.getId()==0)
+				return ResponseEntity.ok().body(new MessageResponse(casteSaved,true, UtilityConstant.SUCCESS));
+			else
+				return ResponseEntity.ok().body(new MessageResponse("",true, UtilityConstant.UPDATED_SUCCESS));
 		}
-		return false;
+		return ResponseEntity.badRequest().body(new MessageResponse(false, UtilityConstant.FAILED));
+	
+	}
+
+	private void refreshCaste() {
+		// TODO Auto-generated method stub
+		castes.clear();
+		castes.addAll(getCastes());
+
 	}
 
 	public boolean deleteCaste(Long casteId) {
 		// TODO Auto-generated method stub
 		try {
-			castes.remove(casteLogical.findById(casteId));
 			casteLogical.delete(casteId);
+			refreshCaste();
 			return true;
 		} catch (ResourceNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -142,8 +179,8 @@ public class FamilyUtilService {
 	public boolean deleteGothiram(Long gothiramId) {
 		// TODO Auto-generated method stub
 		try {
-			gothirams.remove(gothiramLogical.findById(gothiramId));
 			gothiramLogical.delete(gothiramId);
+			refreshGothirm();
 			return true;
 		} catch (ResourceNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -155,46 +192,13 @@ public class FamilyUtilService {
 	public boolean deleteDeity(Long deityId) {
 		// TODO Auto-generated method stub
 		try {
-
-			deitys.remove(deityLogical.findById(deityId));
 			deityLogical.delete(deityId);
+			refreshDeity();
 			return true;
 		} catch (ResourceNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}
-	}	
-	/*public List<RelationShipNameDTO> getRelationShipNames() {
-		if (relationShips.isEmpty()) {
-			relationShips.addAll(relationShipNameLogical.findAll());
-		}
-		return relationShips;
 	}
-
-	public boolean addRelationShipName(RelationShipNameDTO relationShipNameDTO) {
-
-		if (getRelationShipNames().stream().noneMatch(x -> x.getRelationshipName().equalsIgnoreCase(relationShipNameDTO.getRelationshipName()))) { 
-			RelationShipNameDTO relationShipName = relationShipNameLogical.save(relationShipNameDTO);
-			relationShips.add(relationShipName);
-			return true;
-		}
-		return false;
-	}
-
-	public boolean deleteRelateionShipName(Long relationShipNameId) {
-		// TODO Auto-generated method stub
-		try {
-			relationShips.remove(relationShipNameLogical.findById(relationShipNameId));
-			relationShipNameLogical.delete(relationShipNameId);
-			return true;
-		} catch (ResourceNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-	}*/
-
-
-	
 }

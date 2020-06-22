@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.community.gateway.dto.OperatorTypeDTO;
 import com.community.gateway.dto.AssociationCommitteeDTO;
 import com.community.gateway.dto.PermissionDTO;
 import com.community.gateway.exception.ResourceNotFoundException;
+import com.community.gateway.jwt.response.MessageResponse;
 import com.community.gateway.logical.OperatorTypeLogical;
 import com.community.gateway.logical.AssociationCommitteeLogical;
 import com.community.gateway.logical.PermissionLogical;
@@ -26,7 +28,8 @@ public class ManagementUtilService {
 	private final OperatorTypeLogical operatorTypeLogical;
 
 	@Autowired
-	public ManagementUtilService(OperatorTypeLogical dataUpdatorLogical,AssociationCommitteeLogical associationCommitteeLogical,PermissionLogical permissionLogical) {
+	public ManagementUtilService(OperatorTypeLogical dataUpdatorLogical,
+			AssociationCommitteeLogical associationCommitteeLogical, PermissionLogical permissionLogical) {
 
 		this.operatorTypeLogical = dataUpdatorLogical;
 		this.associationCommitteeLogical = associationCommitteeLogical;
@@ -40,21 +43,37 @@ public class ManagementUtilService {
 		return operatorType;
 	}
 
-	public boolean addOperatorType(OperatorTypeDTO operatorTypeDTO) {
-		if (getOperatorTypes().stream()
-				.noneMatch(x -> x.getOperatorTypeName().equalsIgnoreCase(operatorTypeDTO.getOperatorTypeName()))) { 
-			OperatorTypeDTO dataUpdator = operatorTypeLogical.save(operatorTypeDTO);
-			operatorType.add(dataUpdator);
-			return true;
+	public ResponseEntity<MessageResponse> addOperatorType(OperatorTypeDTO operatorTypeDTO) {
+		try {
+			if (getOperatorTypes().stream()
+					.noneMatch(x -> x.getOperatorTypeName().equalsIgnoreCase(operatorTypeDTO.getOperatorTypeName()))) {
+				OperatorTypeDTO dataUpdatorSave = operatorTypeLogical.save(operatorTypeDTO);
+				refreshOperatorType();
+				if(operatorTypeDTO.getId()==0)
+					return ResponseEntity.ok().body(new MessageResponse(true, UtilityConstant.SUCCESS));
+				else
+					return ResponseEntity.ok().body(new MessageResponse(true, UtilityConstant.UPDATED_SUCCESS));
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		return false;
+		
+		return ResponseEntity.badRequest().body(new MessageResponse(false, UtilityConstant.FAILED));
+
+	}
+
+	private void refreshOperatorType() {
+		// TODO Auto-generated method stub
+		operatorType.clear();
+		operatorType.addAll(getOperatorTypes());
 	}
 
 	public boolean deleteOperatorType(Long dataUpdatorId) {
 		// TODO Auto-generated method stub
 		try {
-			operatorType.remove(operatorTypeLogical.findById(dataUpdatorId));
 			operatorTypeLogical.delete(dataUpdatorId);
+			refreshOperatorType();
 			return true;
 		} catch (ResourceNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -70,21 +89,37 @@ public class ManagementUtilService {
 		return associationCommittees;
 	}
 
-	public boolean addAssociationCommittee(AssociationCommitteeDTO associationCommitteeDTO) {
-		if (getAssociationCommittees().stream()
-				.noneMatch(x -> x.getAssociationCommitteeName().equalsIgnoreCase(associationCommitteeDTO.getAssociationCommitteeName()))) { 
-			AssociationCommitteeDTO associationCommittee = associationCommitteeLogical.save(associationCommitteeDTO);
-			associationCommittees.add(associationCommittee);
-			return true;
+	public ResponseEntity<MessageResponse> addAssociationCommittee(AssociationCommitteeDTO associationCommitteeDTO) {
+		try {
+			if (getAssociationCommittees().stream().noneMatch(x -> x.getAssociationCommitteeName()
+					.equalsIgnoreCase(associationCommitteeDTO.getAssociationCommitteeName()))) {
+				AssociationCommitteeDTO associationCommitteeSaved = associationCommitteeLogical.save(associationCommitteeDTO);
+				refreshAssociationCommittee();
+				if(associationCommitteeDTO.getId()==0)
+					return ResponseEntity.ok().body(new MessageResponse(associationCommitteeSaved,true, UtilityConstant.SUCCESS));
+				else
+					return ResponseEntity.ok().body(new MessageResponse(true, UtilityConstant.UPDATED_SUCCESS));
+				
+			}
+		} catch (Exception e) {
+
 		}
-		return false;
+		
+			return ResponseEntity.badRequest()
+					.body(new MessageResponse(false, " AssociationCommittee not Successfully "));
+	}
+
+	private void refreshAssociationCommittee() {
+		// TODO Auto-generated method stub
+		associationCommittees.clear();
+		associationCommittees.addAll(getAssociationCommittees());
 	}
 
 	public boolean deleteAssociationCommittee(Long associationCommitteeId) {
 		// TODO Auto-generated method stub
 		try {
-			associationCommittees.remove(associationCommitteeLogical.findById(associationCommitteeId));
 			associationCommitteeLogical.delete(associationCommitteeId);
+			refreshAssociationCommittee();
 			return true;
 		} catch (ResourceNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -93,7 +128,6 @@ public class ManagementUtilService {
 		}
 	}
 
-
 	public List<PermissionDTO> getPermissions() {
 		if (permissions.isEmpty()) {
 			permissions.addAll(permissionLogical.findAll());
@@ -101,21 +135,38 @@ public class ManagementUtilService {
 		return permissions;
 	}
 
-	public boolean addPermission(PermissionDTO permissionDTO) {
-		if (getPermissions().stream()
-				.noneMatch(x -> x.getPermissionName().equalsIgnoreCase(permissionDTO.getPermissionName()))) { 
-			PermissionDTO permission = permissionLogical.save(permissionDTO);
-			permissions.add(permission);
-			return true;
+	public ResponseEntity<MessageResponse> addPermission(PermissionDTO permissionDTO) {
+		try {
+			if (getPermissions().stream()
+					.noneMatch(x -> x.getPermissionName().equalsIgnoreCase(permissionDTO.getPermissionName()))) {
+				PermissionDTO permissionDTOSaved = permissionLogical.save(permissionDTO);
+				refreshPermission();
+				if (permissionDTO.getId() == 0)
+					return ResponseEntity.ok()
+							.body(new MessageResponse(permissionDTOSaved, true, UtilityConstant.SUCCESS));
+				else
+					return ResponseEntity.ok().body(new MessageResponse(true, UtilityConstant.UPDATED_SUCCESS));
+
+			}
+		} catch (Exception e) {
+
 		}
-		return false;
+
+		return ResponseEntity.badRequest().body(new MessageResponse(false, UtilityConstant.FAILED));
+
+	}
+
+	private void refreshPermission() {
+		// TODO Auto-generated method stub
+		permissions.clear();
+		permissions.addAll(getPermissions());
 	}
 
 	public boolean deletePermission(Long permissionId) {
 		// TODO Auto-generated method stub
 		try {
-			permissions.remove(permissionLogical.findById(permissionId));
 			permissionLogical.delete(permissionId);
+			refreshPermission();
 			return true;
 		} catch (ResourceNotFoundException e) {
 			// TODO Auto-generated catch block

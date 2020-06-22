@@ -56,11 +56,11 @@ public class OperatorController {
 	public ResponseEntity<MessageResponse> createOperator(@Valid @RequestBody OperatorDTO operator) {
 		if(Pattern.matches("(^$|[0-9]{10})",(Long.toString(operator.getMobileNumber()) ).trim() )){
 			operator.setCreatedTimestamp(new Date(System.currentTimeMillis()));
-		 operatorL.save(operator);
-		 return ResponseEntity.ok().body(new MessageResponse(true,"Added Successfully"));
+			OperatorDTO operatorDTOSaved= operatorL.save(operator);
+		 return ResponseEntity.ok().body(new MessageResponse(operatorDTOSaved,true,"Added Successfully"));
 		}
 		System.out.println(" Operator Failed to Mobilenumber");
-		return ResponseEntity.ok().body(new MessageResponse(false,"Failed"));
+		return ResponseEntity.ok().body(new MessageResponse("",false,"Failed"));
 	}
 
 	@PutMapping("/operator/{id}")

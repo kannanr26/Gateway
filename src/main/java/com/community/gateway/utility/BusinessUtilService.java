@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.community.gateway.dto.BusinessDTO;
 import com.community.gateway.exception.ResourceNotFoundException;
+import com.community.gateway.jwt.response.MessageResponse;
 import com.community.gateway.logical.BusinessLogical;
 
 @Service
@@ -30,23 +32,40 @@ public class BusinessUtilService {
 		return business;
 	}
 
-	public boolean addbusiness(BusinessDTO businessDTO) {
+	public ResponseEntity<MessageResponse> addbusiness(BusinessDTO businessDTO) {
+		
+		try {
 		if (getBusiness().stream().noneMatch(x -> x.getBusinessName().equalsIgnoreCase(businessDTO.getBusinessName()))) {
-			BusinessDTO busines = businessLocial.save(businessDTO);
-			business.add(busines);
-			return true;
+			BusinessDTO businessSaved = businessLocial.save(businessDTO);
+			refreshBusiness();
+					
+		if(businessDTO.getId()==0)
+			return ResponseEntity.ok().body(new MessageResponse(businessSaved,true, UtilityConstant.SUCCESS));
+		else
+			return ResponseEntity.ok().body(new MessageResponse(true,UtilityConstant.UPDATED_SUCCESS));
 		}
-		return false;
+		
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+			return ResponseEntity.badRequest().body(new MessageResponse(false,UtilityConstant.FAILED));
 
+	}
+
+
+	private void refreshBusiness() {
+		// TODO Auto-generated method stub
+		business.clear();
+		business.addAll(getBusiness());
 	}
 
 
 	public boolean deleteBusiness(Long businessId) {
 		// TODO Auto-generated method stub
 		try {
-			business.remove(businessLocial.findById(businessId));
 			businessLocial.delete(businessId);
-			 
+			refreshBusiness(); 
 				return true;
 			} catch (ResourceNotFoundException e) {
 				// TODO Auto-generated catch block
