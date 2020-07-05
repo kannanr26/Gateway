@@ -64,7 +64,7 @@ public class PersonalUtilService {
 	private void refreshBloodGroup() {
 		// TODO Auto-generated method stub
 		bloodGroups.clear();
-		bloodGroups.addAll(getBloodGroups());
+		getBloodGroups();
 	}
 
 	public boolean deleteBloodGroup(Long bloodGroupId) {
@@ -108,7 +108,7 @@ public class PersonalUtilService {
 	private void refershMaritalStatus() {
 		// TODO Auto-generated method stub
 		maritalStatuses.clear();
-		maritalStatuses.addAll(getMaritalStatuses());
+		getMaritalStatuses();
 	}
 
 	public boolean deleteMaritalStatus(Long maritalStatusId) {
@@ -155,7 +155,7 @@ public class PersonalUtilService {
 	private void refreshRelationshipName() {
 		// TODO Auto-generated method stub
 		relationshipName.clear();
-		relationshipName.addAll(getRelationShipNames());
+		getRelationShipNames();
 	}
 
 	public boolean deleteRelationshipName(Long relationshipNameId) {

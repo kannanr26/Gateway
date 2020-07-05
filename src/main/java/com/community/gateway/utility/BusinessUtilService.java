@@ -57,7 +57,7 @@ public class BusinessUtilService {
 	private void refreshBusiness() {
 		// TODO Auto-generated method stub
 		business.clear();
-		business.addAll(getBusiness());
+		getBusiness();
 	}
 
 

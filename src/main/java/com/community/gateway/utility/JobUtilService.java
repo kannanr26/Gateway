@@ -53,7 +53,7 @@ public class JobUtilService {
 	private void refreshJob() {
 		// TODO Auto-generated method stub
 		jobs.clear();
-		jobs.addAll(getJobs());
+		getJobs();
 	}
 
 	public List<JobTitleDTO> getJobTitles() {
@@ -88,7 +88,7 @@ public class JobUtilService {
 	private void refreshJobTilte() {
 		// TODO Auto-generated method stub
 		jobTitles.clear();
-		jobTitles.addAll(getJobTitles());
+		getJobTitles();
 	}
 
 	public boolean deleteJob(Long jobId) {

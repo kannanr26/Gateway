@@ -57,7 +57,7 @@ public class CoursesUtilService {
 	private void refreshCourse() {
 		// TODO Auto-generated method stub
 		courses.clear();
-		courses.addAll(getCourses());
+		getCourses();
 	}
 
 	public boolean deleteCourse(Long courseId) {

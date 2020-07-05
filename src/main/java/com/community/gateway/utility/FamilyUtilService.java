@@ -46,6 +46,7 @@ public class FamilyUtilService {
 		if (gothirams.isEmpty()) {
 			gothirams.addAll(gothiramLogical.findAll());
 		}
+		System.out.println("Gothiram Size ::"+gothirams.size());
 		return gothirams;
 	}
 
@@ -66,7 +67,7 @@ public class FamilyUtilService {
 	private void refreshGothirm() {
 		// TODO Auto-generated method stub
 		gothirams.clear();
-		gothirams.addAll(getGothirams());
+		getGothirams();
 	}
 
 	public List<KulamDTO> getKulams() {
@@ -121,7 +122,7 @@ public class FamilyUtilService {
 	private void refreshDeity() {
 		// TODO Auto-generated method stub
 		deitys.clear();
-		deitys.addAll(getDeitys());
+		getDeitys();
 	}
 
 	public boolean deleteKulams(Long kulamId) {
@@ -159,7 +160,7 @@ public class FamilyUtilService {
 	private void refreshCaste() {
 		// TODO Auto-generated method stub
 		castes.clear();
-		castes.addAll(getCastes());
+		getCastes();
 
 	}
 

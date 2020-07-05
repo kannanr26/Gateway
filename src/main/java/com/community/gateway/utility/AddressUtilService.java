@@ -102,7 +102,7 @@ public class AddressUtilService {
 	private void refreshCountry() {
 		// TODO Auto-generated method stub
 		countrys.clear();
-		countrys.addAll(getCountries());
+		getCountries();
 
 	}
 

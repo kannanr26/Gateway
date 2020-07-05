@@ -53,7 +53,7 @@ public class RoleUtilService {
 	private void refreshRole() {
 		// TODO Auto-generated method stub
 		roles.clear();
-		roles.addAll(getRoles());
+		getRoles();
 	}
 
 	public boolean deleteRole(Long roleId) {

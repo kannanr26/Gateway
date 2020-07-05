@@ -66,6 +66,6 @@ public class EducationUtilService {
 	private void refreshEducation() {
 		// TODO Auto-generated method stub
 		educations.clear();
-		educations.addAll(getEducations());
+		getEducations();
 	}
 }

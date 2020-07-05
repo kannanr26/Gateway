@@ -66,7 +66,7 @@ public class ManagementUtilService {
 	private void refreshOperatorType() {
 		// TODO Auto-generated method stub
 		operatorType.clear();
-		operatorType.addAll(getOperatorTypes());
+		getOperatorTypes();
 	}
 
 	public boolean deleteOperatorType(Long dataUpdatorId) {
@@ -112,7 +112,7 @@ public class ManagementUtilService {
 	private void refreshAssociationCommittee() {
 		// TODO Auto-generated method stub
 		associationCommittees.clear();
-		associationCommittees.addAll(getAssociationCommittees());
+		getAssociationCommittees();
 	}
 
 	public boolean deleteAssociationCommittee(Long associationCommitteeId) {
@@ -159,7 +159,7 @@ public class ManagementUtilService {
 	private void refreshPermission() {
 		// TODO Auto-generated method stub
 		permissions.clear();
-		permissions.addAll(getPermissions());
+		getPermissions();
 	}
 
 	public boolean deletePermission(Long permissionId) {
