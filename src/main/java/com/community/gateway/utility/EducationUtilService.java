@@ -37,6 +37,7 @@ public class EducationUtilService {
 		try {
 		if (getEducations().stream().noneMatch(x -> x.getEducationName().equalsIgnoreCase(educationDTO.getEducationName()))) {
 			EducationDTO educationSaved = educationLocial.save(educationDTO);
+			refreshEducation();
 			if(educationDTO.getId()==0)
 				return ResponseEntity.ok().body(new MessageResponse(educationSaved,true,UtilityConstant.SUCCESS));
 			else
