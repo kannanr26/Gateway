@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,12 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.community.gateway.dto.Family_DetailsDTO;
 import com.community.gateway.dto.PersonDTO;
+import com.community.gateway.exception.ResourceNotFoundException;
 import com.community.gateway.jwt.response.MessageResponse;
 import com.community.gateway.logical.Family_DetailsLogical;
 import com.community.gateway.logical.PersonLogical;
 import com.community.gateway.utility.UtilityConstant;
 
-//@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("/gws")
 public class FamilyController {
@@ -28,8 +30,20 @@ public class FamilyController {
 
 	@Autowired
 	private PersonLogical personLogical;
-
-	@PostMapping("/addGroup")
+	
+	
+	@GetMapping("/getFamilyWithRegistrationNumber/{registrationNumber}")
+	public  ResponseEntity<Family_DetailsDTO> getFamilyWithRegistrationNumber(@PathVariable(value = "registrationNumber") String registrationNumber) {
+		try {
+			return ResponseEntity.ok().body(familyL.findByRegistrationNumber(registrationNumber));
+		} catch (ResourceNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ResponseEntity.badRequest().body(new Family_DetailsDTO());
+		
+	}
+	@PostMapping("/addFamily")
 	public ResponseEntity<MessageResponse> create(@Valid @RequestBody Family_DetailsDTO family) {
 		MessageResponse msgResp;
 		try {

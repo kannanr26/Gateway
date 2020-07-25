@@ -26,6 +26,7 @@ import com.community.gateway.dto.CoursesDTO;
 import com.community.gateway.dto.DeityDTO;
 import com.community.gateway.dto.DistrictDTO;
 import com.community.gateway.dto.EducationDTO;
+import com.community.gateway.dto.Family_DetailsDTO;
 import com.community.gateway.dto.GothiramDTO;
 import com.community.gateway.dto.JobDTO;
 import com.community.gateway.dto.JobTitleDTO;
@@ -37,6 +38,7 @@ import com.community.gateway.dto.RelationShipNameDTO;
 import com.community.gateway.dto.RoleDTO;
 import com.community.gateway.dto.StateDTO;
 import com.community.gateway.jwt.response.MessageResponse;
+import com.community.gateway.logical.OperatorLogical;
 import com.community.gateway.utility.AddressUtilService;
 import com.community.gateway.utility.BusinessUtilService;
 import com.community.gateway.utility.CoursesUtilService;
@@ -65,6 +67,9 @@ public class UtilityController {
 	private final ManagementUtilService managementService;
 
 	@Autowired
+	private OperatorLogical operatorL;
+	
+	@Autowired
 	public UtilityController(FamilyUtilService familyService, AddressUtilService addressService,
 			BusinessUtilService businessService, CoursesUtilService coursesService,
 			EducationUtilService educationService, JobUtilService jobService, RoleUtilService roleService,
@@ -79,6 +84,56 @@ public class UtilityController {
 		this.personService = personService;
 		// this.enumService = enumService;
 		this.managementService = managementService;
+	}
+
+	
+	@GetMapping("/getWizard")
+	public ResponseEntity<Family_DetailsDTO> getFirstPageWizard() {
+
+		// wizardGetter.set (addressService.getCities()
+		return ResponseEntity.ok().body(initializeWizard());
+	}
+	
+	/*
+	 * private WizardGetter initialize_PersonalWizard() { // TODO Auto-generated
+	 * method stub WizardGetter wizardGetter = new WizardGetter();
+	 * 
+	 * wizardGetter.setBusiness(businessService.getBusiness());
+	 * wizardGetter.setBloodGroups(personService.getBloodGroups());
+	 * wizardGetter.setJobs(jobService.getJobs());
+	 * wizardGetter.setJobTitles(jobService.getJobTitles());
+	 * wizardGetter.setEducations(educationService.getEducations());
+	 * wizardGetter.setCourses(courseService.getCourses());
+	 * wizardGetter.setRelationShipNames(personService.getRelationShipNames());
+	 * return wizardGetter; }
+	 * 
+	 * private WizardGetter initialize_FamilyWizard() { WizardGetter wizardGetter =
+	 * new WizardGetter(); wizardGetter.setKulams(familyService.getKulams());
+	 * wizardGetter.setGothirams(familyService.getGothirams());
+	 * wizardGetter.setCastes(familyService.getCastes());
+	 * wizardGetter.setDeitys(familyService.getDeitys()); //
+	 * wizardGetter.setState(addressService.getStates());
+	 * wizardGetter.setCountries(addressService.getCountries()); return
+	 * wizardGetter; }
+	 */	private Family_DetailsDTO initializeWizard() {
+		 Family_DetailsDTO wizardGetter = new Family_DetailsDTO();
+		wizardGetter.setOperators(operatorL.findAll());
+
+		wizardGetter.setKulams(familyService.getKulams());
+		wizardGetter.setGothirams(familyService.getGothirams());
+		wizardGetter.setCastes(familyService.getCastes());
+		wizardGetter.setDeitys(familyService.getDeitys());
+		// wizardGetter.setState(addressService.getStates());
+		wizardGetter.setCountries(addressService.getCountries());
+		wizardGetter.setBusiness(businessService.getBusiness());
+		wizardGetter.setBloodGroups(personService.getBloodGroups());
+		wizardGetter.setJobs(jobService.getJobs());
+		wizardGetter.setJobTitles(jobService.getJobTitles());
+		wizardGetter.setEducations(educationService.getEducations());
+		wizardGetter.setCourses(courseService.getCourses());
+		wizardGetter.setRelationShipNames(personService.getRelationShipNames());
+
+		return wizardGetter;
 	}
 
 	@PostMapping("/addKulam")
@@ -450,7 +505,6 @@ public class UtilityController {
 	public ResponseEntity<MessageResponse> addAssociationCommittee(
 			@Valid @RequestBody AssociationCommitteeDTO associationCommittee) {
 		return managementService.addAssociationCommittee(associationCommittee);
-		
 
 	}
 

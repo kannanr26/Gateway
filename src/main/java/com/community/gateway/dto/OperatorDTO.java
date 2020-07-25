@@ -1,14 +1,13 @@
 package com.community.gateway.dto;
 
+import com.community.gateway.model.Role;
 import com.community.gateway.model.e_num.EOperator;
 import com.community.gateway.model.e_num.ERole;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+
+import lombok.Data;
+
 import java.util.Date;
-@Setter
-@Getter
-@EqualsAndHashCode
+@Data
 public class OperatorDTO {
     private long id;
     private String operatorName;
@@ -16,6 +15,7 @@ public class OperatorDTO {
     private long mobileNumber;
     private ERole role;
     private EOperator[] operatorType;
+    //private OperatorTypeDTO operatorType;
     private Date createdTimestamp;
     
 }

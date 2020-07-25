@@ -136,12 +136,14 @@ public class PersonLogicalImpl implements PersonLogical {
 	    jobDetailLogic.save(jobDetailsToSave);
 	    businessDetailLogic.save(businessDetailToSave);
 	    
-	     RelationShipsDTO rel;
-	     if(personDto.getRelation().equals(ERelation.SELF)) {
-	    	 rel=new RelationShipsDTO(personDTOSaved.getId(),personDTOSaved.getId(),personDto.getRelation().getRelation());
-	     }else {
-	    	 rel=new RelationShipsDTO(personDTOSaved.getId(),personDto.getRelation().getMasterId(),personDto.getRelation().getRelation());
-	     }
+	     RelationShipsDTO rel = null;
+		/*
+		 * if(personDto.getRelation().equals(ERelation.SELF)) { rel=new
+		 * RelationShipsDTO(personDTOSaved.getId(),personDTOSaved.getId(),personDto.
+		 * getRelation().getRelation()); }else { rel=new
+		 * RelationShipsDTO(personDTOSaved.getId(),personDto.getRelation().getMasterId()
+		 * ,personDto.getRelation().getRelation()); }
+		 */
 	    relationShipLogical.save(rel);
 		
 	    return personDTOSaved;

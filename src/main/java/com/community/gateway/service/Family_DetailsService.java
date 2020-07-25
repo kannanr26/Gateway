@@ -16,4 +16,6 @@ public interface Family_DetailsService {
 	void delete(Long family_detailsId);
 
 	Family_Details save(@Valid Family_Details family_details)throws Exception;
+
+	Family_Details findByRegistrationNumber(@Valid String registrationNumber) throws ResourceNotFoundException;
 }

@@ -17,36 +17,4 @@ public class RelationShipsDTO {
 	this.relation=relation;
 	
 	}
-
-	public long getId() {
-		return id;
-	}
-
-	public long getPersonId() {
-		return personId;
-	}
-
-	public long getMasterId() {
-		return masterId;
-	}
-
-	public ERelation getRelation() {
-		return relation;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public void setPersonId(long personId) {
-		this.personId = personId;
-	}
-
-	public void setMasterId(long masterId) {
-		this.masterId = masterId;
-	}
-
-	public void setRelation(ERelation relation) {
-		this.relation = relation;
-	}
 }

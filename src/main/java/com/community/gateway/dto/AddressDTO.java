@@ -12,6 +12,8 @@ public class AddressDTO implements Serializable {
 	private int houseNumber;
 
 	private String streetName;
+	private String streetName1;
+	private String landMark;
 
 	private String city;
 
@@ -19,8 +21,8 @@ public class AddressDTO implements Serializable {
 
 	private String zipCode;
 
-	private Family_DetailsDTO familyDetails;
+	//private Family_DetailsDTO familyDetails;
 
-	private PersonDTO personDTO;
+	//private PersonDTO personDTO;
 
 }
