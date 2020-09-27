@@ -3,6 +3,8 @@ package com.community.gateway.dto;
 import java.util.Date;
 import java.util.List;
 
+import com.community.gateway.model.e_num.EGender;
+
 import lombok.Data;
 
 @Data
@@ -43,9 +45,11 @@ public class Family_DetailsDTO {
 	private List<EducationDTO> educations;
 	private List<CoursesDTO> courses;
 	private List<RelationShipNameDTO> relationShipNames;
+	private List<EGender> genders;
+	private List<MaritalStatusDTO> maritalStatuies;
 	
 	
-	private AddressDTO address;
+	private AddressDTO address=new AddressDTO();
 
 	private List<PersonDTO> persons;
 

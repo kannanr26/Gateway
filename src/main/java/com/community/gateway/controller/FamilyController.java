@@ -47,6 +47,7 @@ public class FamilyController {
 	public ResponseEntity<MessageResponse> create(@Valid @RequestBody Family_DetailsDTO family) {
 		MessageResponse msgResp;
 		try {
+			System.out.println(" FAmily Details :"+family.toString());
 			familyL.save(family);
 			msgResp = new MessageResponse(true, UtilityConstant.SUCCESS);
 			return ResponseEntity.ok().body(msgResp);

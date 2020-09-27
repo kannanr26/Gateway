@@ -132,6 +132,7 @@ public class UtilityController {
 		wizardGetter.setEducations(educationService.getEducations());
 		wizardGetter.setCourses(courseService.getCourses());
 		wizardGetter.setRelationShipNames(personService.getRelationShipNames());
+		wizardGetter.setGenders(personService.getGenders());
 
 		return wizardGetter;
 	}
@@ -406,10 +407,23 @@ public class UtilityController {
 		return addressService.addCities(city);
 
 	}
+	@GetMapping("/getPincode")
+	public ResponseEntity<List<Long>> getPincode() {
+
+		List<Long> pincodeList=addressService.getPincode();
+		
+		return ResponseEntity.ok().body(pincodeList);
+	}
 
 	@GetMapping("/getCitys/{id}")
 	public ResponseEntity<List<CityDTO>> getCity(@PathVariable(value = "id") Long districtId) {
-		return ResponseEntity.ok().body(addressService.getCities(districtId));
+		try {
+			return ResponseEntity.ok().body(addressService.getCities( addressService.getDistrictById(districtId)));
+		} catch (com.community.gateway.exception.ResourceNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ResponseEntity.badRequest().body(null);
 	}
 
 	@DeleteMapping("/deleteCity/{id}")

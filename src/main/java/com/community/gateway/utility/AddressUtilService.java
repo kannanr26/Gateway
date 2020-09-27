@@ -39,9 +39,9 @@ public class AddressUtilService {
 		this.districtLogical = districtLogical;
 	}
 
-	public List<CityDTO> getCities(Long districtId) {
+	public List<CityDTO> getCities(DistrictDTO district) {
 		try {
-			return cityLogical.findByDistrictId(districtId);
+			return cityLogical.findByDistrict(district);
 		} catch (ResourceNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -51,8 +51,8 @@ public class AddressUtilService {
 	}
 
 	public ResponseEntity<MessageResponse> addCities(CityDTO cityDTO) {
-		if (getCities(cityDTO.getDistrictId()).stream()
-				.noneMatch(x -> x.getCityName().equalsIgnoreCase(cityDTO.getCityName()))) {
+		if (getCities(cityDTO.getDistrict()).stream()
+				.noneMatch(x ->( x.getCityName().equalsIgnoreCase(cityDTO.getCityName())) && (x.getPincode()==(cityDTO.getPincode()))  )) {
 			CityDTO cityDtoSaved = cityLogical.save(cityDTO);
 			if (cityDTO.getId() == 0)
 				return ResponseEntity.ok().body(new MessageResponse(cityDtoSaved, true, UtilityConstant.SUCCESS));
@@ -151,6 +151,9 @@ public class AddressUtilService {
 		return districtLogical.findAllByStateId(stateId);
 	}
 
+	public DistrictDTO getDistrictById(Long districtId) throws ResourceNotFoundException {
+		return districtLogical.findById(districtId);
+	}
 	public ResponseEntity<MessageResponse> addDistrict(DistrictDTO districtDTO) {
 		if (getDistricts(districtDTO.getStateId()).stream()
 				.noneMatch(x -> x.getDistrictName().equalsIgnoreCase(districtDTO.getDistrictName()))) {
@@ -175,6 +178,11 @@ public class AddressUtilService {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	public List<Long> getPincode() {
+		// TODO Auto-generated method stub
+		return cityLogical.getPincode();
 	}
 
 }

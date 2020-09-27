@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import com.community.gateway.exception.ResourceNotFoundException;
 import com.community.gateway.model.City;
+import com.community.gateway.model.District;
 
 public interface CityService {
 
@@ -17,5 +18,7 @@ public interface CityService {
 
 	City save(@Valid City city);
 
-	List<City> findByDistrictId(long districtId);
+	List<City> findByDistrict(District district);
+
+	List<Long> getPincode();
 }

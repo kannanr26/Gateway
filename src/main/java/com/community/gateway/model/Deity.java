@@ -24,7 +24,5 @@ public class Deity {
 	private String deityName;
 	@Column(name = "CITYID", nullable = false)
 	private long cityId;
-	@Column(name = "DISTRICTID", nullable = false)
-	private long districtId;
 	
 }

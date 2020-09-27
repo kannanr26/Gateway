@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 
 import com.community.gateway.exception.ResourceNotFoundException;
 import com.community.gateway.model.City;
+import com.community.gateway.model.District;
 import com.community.gateway.model.State;
 import com.community.gateway.model.repo.CityRepository;
+import com.community.gateway.model.repoHelper.QueryHelper;
 
 @Service
 public class CityServiceImpl implements CityService {
@@ -19,6 +21,7 @@ public class CityServiceImpl implements CityService {
 	@Autowired
 	CityRepository cityRepository;
 
+	
 	@Override
 	public City findById(Long cityId) throws ResourceNotFoundException {
 		// TODO Auto-generated method stub
@@ -50,14 +53,20 @@ public class CityServiceImpl implements CityService {
 	}
 
 	@Override
-	public List<City> findByDistrictId(long districtId) {
+	public List<City> findByDistrict(District district) {
 		
 		List<City> list = new ArrayList<>();
-		System.out.println("districtId"+districtId);
-		Iterable<City> customers = cityRepository.findAllByDistrictId(districtId);
+		//System.out.println("districtId"+districtId);
+		Iterable<City> customers = cityRepository.findAllByDistrict(district);
 
 		customers.forEach(list::add);
 		return list;
 
+	}
+
+	@Override
+	public List<Long> getPincode() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

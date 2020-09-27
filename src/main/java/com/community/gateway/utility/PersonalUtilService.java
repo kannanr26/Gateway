@@ -1,6 +1,7 @@
 package com.community.gateway.utility;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import com.community.gateway.jwt.response.MessageResponse;
 import com.community.gateway.logical.BloodGroupLogical;
 import com.community.gateway.logical.MaritalStatusLogical;
 import com.community.gateway.logical.RelationshipNameLogical;
+import com.community.gateway.model.e_num.EGender;
 
 import ch.qos.logback.classic.pattern.Util;
 
@@ -37,6 +39,10 @@ public class PersonalUtilService {
 		this.relationShipNamelogical=relationShipNamelogical;
 	}
 
+	public List<EGender> getGenders() {
+		
+		return  Arrays.asList(EGender.values());
+	}
 	public List<BloodGroupDTO> getBloodGroups() {
 		if (bloodGroups.isEmpty()) {
 			bloodGroups.addAll(bloodGroupLogical.findAll());

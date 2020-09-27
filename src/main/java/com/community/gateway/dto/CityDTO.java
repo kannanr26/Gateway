@@ -6,6 +6,9 @@ import lombok.Data;
 public class CityDTO {
 
 	private long id;
-	private long districtId;
+	private CountryDTO country;
+	private DistrictDTO district;
+	private StateDTO state;
+	private long pincode;
 	private String cityName;
 }
