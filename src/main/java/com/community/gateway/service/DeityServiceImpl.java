@@ -48,4 +48,14 @@ public class DeityServiceImpl implements DeityService {
 		// TODO Auto-generated method stub
 		return deityRepository.save(deity);
 	}
+
+	@Override
+	public List<Deity> findByCityId(Long cityId) {
+		// TODO Auto-generated method stub
+		List<Deity> list = new ArrayList<>();
+		Iterable<Deity> customers = deityRepository.findByCityId(cityId);
+
+		customers.forEach(list::add);
+		return list;
+	}
 }

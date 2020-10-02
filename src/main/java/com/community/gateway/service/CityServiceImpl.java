@@ -69,4 +69,14 @@ public class CityServiceImpl implements CityService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public List<City> findByPincode(Long pincode) {
+		// TODO Auto-generated method stub
+		List<City> list = new ArrayList<>();
+		Iterable<City> customers = cityRepository.findAllByPincode(pincode);
+
+		customers.forEach(list::add);
+		return list;
+	}
 }

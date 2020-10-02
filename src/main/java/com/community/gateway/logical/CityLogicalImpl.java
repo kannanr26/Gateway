@@ -71,4 +71,10 @@ public class CityLogicalImpl implements CityLogical {
 		return pin;
 	}
 
+	@Override
+	public List<CityDTO> findByPincode(Long pincode) {
+		// TODO Auto-generated method stub
+		return cityMapper.toCityDTOs(cityService.findByPincode(pincode));
+	}
+
 }

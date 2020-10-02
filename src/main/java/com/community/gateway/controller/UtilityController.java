@@ -206,6 +206,17 @@ public class UtilityController {
 	public ResponseEntity<List<DeityDTO>> getDeitys() {
 		return ResponseEntity.ok().body(familyService.getDeitys());
 	}
+	
+	@GetMapping("/getDeitysByCity/{id}")
+	public ResponseEntity<List<DeityDTO>> getDeitysByCity(@PathVariable(value = "id") Long cityId) {
+		return ResponseEntity.ok().body(familyService.getDeitysByCity(cityId));
+	}
+	
+	/*
+	 * @GetMapping("/getDeitysByCity") public ResponseEntity<List<DeityDTO>>
+	 * getDeitysByCity() { return
+	 * ResponseEntity.ok().body(familyService.getDeitys()); }
+	 */
 
 	@DeleteMapping("/deleteDeity/{id}")
 	public ResponseEntity<MessageResponse> deleteDeity(@PathVariable(value = "id") Long deityId)
@@ -407,7 +418,7 @@ public class UtilityController {
 		return addressService.addCities(city);
 
 	}
-	@GetMapping("/getPincode")
+	@GetMapping("/getPincodes")
 	public ResponseEntity<List<Long>> getPincode() {
 
 		List<Long> pincodeList=addressService.getPincode();
@@ -424,6 +435,11 @@ public class UtilityController {
 			e.printStackTrace();
 		}
 		return ResponseEntity.badRequest().body(null);
+	}
+	
+	@GetMapping("/getCitysByPincode/{pincode}")
+	public ResponseEntity<List<CityDTO>> getCitysByPincode(@PathVariable(value = "pincode") Long pincode) {
+		return ResponseEntity.ok().body(addressService.getCitiesByPincode( pincode));
 	}
 
 	@DeleteMapping("/deleteCity/{id}")

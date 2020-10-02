@@ -19,4 +19,6 @@ public interface DeityLogical {
 
 	DeityDTO save(@Valid DeityDTO deityDto);
 
+	List<DeityDTO> findByCityId(Long cityId);
+
 }

@@ -13,7 +13,8 @@ import javax.persistence.UniqueConstraint;
 import lombok.Data;
 
 @Entity
-@Table(name = "CITY", uniqueConstraints = {@UniqueConstraint(columnNames = {"DISTRICTID", "CITYNAME"})})
+//@Table(name = "CITY", uniqueConstraints = {@UniqueConstraint(columnNames = {"DISTRICTID", "CITYNAME"})})
+@Table(name = "CITY")
 @Data
 public class City {
 
@@ -22,8 +23,6 @@ public class City {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "CITYID", nullable = false)
 	private long id;
-	@Column(name = "DISTRICTID", nullable = false)
-	private long districtId;
 	@Column(name = "CITYNAME", nullable = false)
 	private String cityName;
 	

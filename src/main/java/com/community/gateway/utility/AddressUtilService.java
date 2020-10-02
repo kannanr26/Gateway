@@ -185,4 +185,9 @@ public class AddressUtilService {
 		return cityLogical.getPincode();
 	}
 
+	public List<CityDTO> getCitiesByPincode(Long pincode) {
+		// TODO Auto-generated method stub
+		return cityLogical.findByPincode(pincode);
+	}
+
 }

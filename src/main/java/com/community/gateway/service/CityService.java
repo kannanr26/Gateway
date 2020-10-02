@@ -21,4 +21,6 @@ public interface CityService {
 	List<City> findByDistrict(District district);
 
 	List<Long> getPincode();
+
+	List<City> findByPincode(Long pincode);
 }

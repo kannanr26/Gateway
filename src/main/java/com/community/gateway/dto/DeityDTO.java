@@ -6,11 +6,8 @@ import lombok.Data;
 public class DeityDTO {
 
 	private long id;
-
 	private String deityName;
 	private long cityId;
-	private long districtId;
 
-	private String location;
 
 }

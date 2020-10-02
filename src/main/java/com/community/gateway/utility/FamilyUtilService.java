@@ -14,6 +14,7 @@ import com.community.gateway.dto.KulamDTO;
 import com.community.gateway.exception.ResourceNotFoundException;
 import com.community.gateway.jwt.response.MessageResponse;
 import com.community.gateway.logical.CasteLogical;
+import com.community.gateway.logical.CityLogical;
 import com.community.gateway.logical.DeityLogical;
 import com.community.gateway.logical.GothiramLogical;
 import com.community.gateway.logical.KulamLogical;
@@ -24,21 +25,25 @@ public class FamilyUtilService {
 
 	private static final List<GothiramDTO> gothirams = new ArrayList<GothiramDTO>();
 	private static final List<KulamDTO> kulams = new ArrayList<KulamDTO>();
-	private static final List<DeityDTO> deitys = new ArrayList<DeityDTO>();
+//	private static final List<DeityDTO> deitys = new ArrayList<DeityDTO>();
 	private static final List<CasteDTO> castes = new ArrayList<CasteDTO>();
 
 	private final GothiramLogical gothiramLogical;
 	private final KulamLogical kulamLogical;
-	private final DeityLogical deityLogical;
 	private final CasteLogical casteLogical;
+	
+	@Autowired
+	private  DeityLogical deityLogical;
+	
+	@Autowired
+	private CityLogical cityLogical;
 
 	@Autowired
-	public FamilyUtilService(GothiramLogical gothiramLogical, KulamLogical kulamLogical, DeityLogical deityLogical,
-			CasteLogical casteLogical, RelationshipNameLogical relationShipNameLogical) {
+	public FamilyUtilService(GothiramLogical gothiramLogical, KulamLogical kulamLogical,
+			CasteLogical casteLogical) {
 
 		this.gothiramLogical = gothiramLogical;
 		this.kulamLogical = kulamLogical;
-		this.deityLogical = deityLogical;
 		this.casteLogical = casteLogical;
 	}
 
@@ -98,18 +103,15 @@ public class FamilyUtilService {
 		getKulams();
 	}
 
-	public List<DeityDTO> getDeitys() {
-		if (deitys.isEmpty()) {
-			deitys.addAll(deityLogical.findAll());
-		}
-		return deitys;
+	public List<DeityDTO> getDeitys() {		
+		return deityLogical.findAll();
 	}
 
 	public ResponseEntity<MessageResponse> addDeitys(DeityDTO deityDTO) {
 
 		if (getDeitys().stream().noneMatch(x -> x.getDeityName().equalsIgnoreCase(deityDTO.getDeityName()))) {
 			DeityDTO deitySaved = deityLogical.save(deityDTO);
-			refreshDeity();
+			//refreshDeity();
 			if(deityDTO.getId()==0)
 				return ResponseEntity.ok().body(new MessageResponse(deitySaved,true, UtilityConstant.SUCCESS ));
 			else
@@ -119,11 +121,11 @@ public class FamilyUtilService {
 		
 	}
 
-	private void refreshDeity() {
+	/*private void refreshDeity() {
 		// TODO Auto-generated method stub
 		deitys.clear();
 		getDeitys();
-	}
+	}*/
 
 	public boolean deleteKulams(Long kulamId) {
 		try {
@@ -194,12 +196,16 @@ public class FamilyUtilService {
 		// TODO Auto-generated method stub
 		try {
 			deityLogical.delete(deityId);
-			refreshDeity();
 			return true;
 		} catch (ResourceNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	public List<DeityDTO> getDeitysByCity(Long cityId){
+			
+		return deityLogical.findByCityId(cityId);
 	}
 }

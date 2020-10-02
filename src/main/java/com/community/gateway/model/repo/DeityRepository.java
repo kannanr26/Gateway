@@ -9,4 +9,6 @@ import com.community.gateway.model.Deity;
 @Repository
 public interface DeityRepository extends CrudRepository<Deity, Long> {
 
+	Iterable<Deity> findByCityId(Long cityId);
+
 }

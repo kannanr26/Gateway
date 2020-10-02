@@ -11,4 +11,6 @@ public interface CityRepository extends CrudRepository<City, Long> {
 
 	Iterable<City> findAllByDistrict(District district);
 
+	Iterable<City> findAllByPincode(Long pincode);
+
 }

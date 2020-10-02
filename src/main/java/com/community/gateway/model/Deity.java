@@ -11,10 +11,9 @@ import javax.persistence.UniqueConstraint;
 import lombok.Data;
 
 @Entity
-@Table(name = "DEITY", uniqueConstraints = {@UniqueConstraint(columnNames = {"DEITYNAME","DISTRICTID", "CITYID"})})
+@Table(name = "DEITY", uniqueConstraints = {@UniqueConstraint(columnNames = {"DEITYNAME", "CITYID"})})
 @Data
 public class Deity {
-
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

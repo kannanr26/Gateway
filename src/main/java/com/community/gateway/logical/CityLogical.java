@@ -19,6 +19,8 @@ public interface CityLogical {
 
 	List<Long> getPincode();
 
+	List<CityDTO> findByPincode(Long pincode);
+
 	
 
 }

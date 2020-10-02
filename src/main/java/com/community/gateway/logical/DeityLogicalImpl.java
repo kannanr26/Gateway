@@ -46,4 +46,10 @@ public class DeityLogicalImpl implements DeityLogical {
 
 	}
 
+	@Override
+	public List<DeityDTO> findByCityId(Long cityId) {
+		// TODO Auto-generated method stub
+		return deityMapper.toDeityDTOs(deityService.findByCityId(cityId));
+	}
+
 }

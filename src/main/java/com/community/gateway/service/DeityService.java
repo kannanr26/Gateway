@@ -16,4 +16,6 @@ public interface DeityService {
 	void delete(Long deityId);
 
 	Deity save(@Valid Deity deity);
+
+	List<Deity> findByCityId(Long cityId);
 }
