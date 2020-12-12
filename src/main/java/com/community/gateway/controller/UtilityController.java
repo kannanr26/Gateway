@@ -55,25 +55,24 @@ import com.community.gateway.utility.RoleUtilService;
 @RequestMapping("/gws")
 public class UtilityController {
 
-	private final FamilyUtilService familyService;
-	private final PersonalUtilService personService;
-	private final AddressUtilService addressService;
-	private final BusinessUtilService businessService;
-	private final CoursesUtilService courseService;
-	private final EducationUtilService educationService;
-	private final JobUtilService jobService;
-	private final RoleUtilService roleService;
-	// private final EnumUtilService enumService;
-	private final ManagementUtilService managementService;
+	private static  FamilyUtilService familyService ;
+	private static  PersonalUtilService personService = null;
+	private static  AddressUtilService addressService = null;
+	private static  BusinessUtilService businessService = null;
+	private static  CoursesUtilService courseService = null;
+	private static  EducationUtilService educationService = null;
+	private static  JobUtilService jobService = null;
+	private static  RoleUtilService roleService = null;
+	private static  ManagementUtilService managementService = null;
 
-	@Autowired
-	private OperatorLogical operatorL;
+	//@Autowired
+	private static OperatorLogical operatorL;
 	
 	@Autowired
 	public UtilityController(FamilyUtilService familyService, AddressUtilService addressService,
 			BusinessUtilService businessService, CoursesUtilService coursesService,
 			EducationUtilService educationService, JobUtilService jobService, RoleUtilService roleService,
-			PersonalUtilService personService, ManagementUtilService managementService) {
+			PersonalUtilService personService, ManagementUtilService managementService,OperatorLogical operatorLog) {
 		this.familyService = familyService;
 		this.addressService = addressService;
 		this.businessService = businessService;
@@ -84,8 +83,8 @@ public class UtilityController {
 		this.personService = personService;
 		// this.enumService = enumService;
 		this.managementService = managementService;
+			this.operatorL=operatorLog;
 	}
-
 	
 	@GetMapping("/getWizard")
 	public ResponseEntity<Family_DetailsDTO> getFirstPageWizard() {
@@ -117,6 +116,16 @@ public class UtilityController {
 	 * wizardGetter; }
 	 */	private Family_DetailsDTO initializeWizard() {
 		 Family_DetailsDTO wizardGetter = new Family_DetailsDTO();
+		
+		 getFamily(wizardGetter);
+		 return wizardGetter;
+	}
+
+	static void getFamily(Family_DetailsDTO wizardGetter) {
+		// TODO Auto-generated method stub
+		if(wizardGetter==null) {
+			System.out.println("wizar is null:");
+		}
 		wizardGetter.setOperators(operatorL.findAll());
 
 		wizardGetter.setKulams(familyService.getKulams());
@@ -133,9 +142,8 @@ public class UtilityController {
 		wizardGetter.setCourses(courseService.getCourses());
 		wizardGetter.setRelationShipNames(personService.getRelationShipNames());
 		wizardGetter.setGenders(personService.getGenders());
-
-		return wizardGetter;
 	}
+
 
 	@PostMapping("/addKulam")
 	public ResponseEntity<MessageResponse> addKulam(@Valid @RequestBody KulamDTO kulam) {

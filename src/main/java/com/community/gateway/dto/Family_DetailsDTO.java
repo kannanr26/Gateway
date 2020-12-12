@@ -33,6 +33,9 @@ public class Family_DetailsDTO {
 	private List<OperatorDTO> enteredOperator;
 	private List<OperatorDTO> computedOperator;
 	private CountryDTO selectedCountry;
+	private StateDTO selectedState;
+	private DistrictDTO selectedDistrict;
+	private CityDTO selectedCity;
 	private List<CountryDTO> countries;
 	private BusinessDTO selectedBusiness;
 	private List<BusinessDTO> business;

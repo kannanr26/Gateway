@@ -78,7 +78,7 @@ public class LoginController {
 
 		}
 
-		return ResponseEntity.ok(new JWTResponse(jwt, operator.getOperatorName(), operator.getRole().name(), "Success"));
+		return ResponseEntity.ok(new JWTResponse(jwt, operator.getOperatorName(), operator.getRole(), operator.getOperatorType(),"Success"));
 	}
 
 }

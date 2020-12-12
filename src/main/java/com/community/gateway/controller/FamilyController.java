@@ -34,13 +34,28 @@ public class FamilyController {
 	
 	@GetMapping("/getFamilyWithRegistrationNumber/{registrationNumber}")
 	public  ResponseEntity<Family_DetailsDTO> getFamilyWithRegistrationNumber(@PathVariable(value = "registrationNumber") String registrationNumber) {
+		Family_DetailsDTO family_ = null;
 		try {
-			return ResponseEntity.ok().body(familyL.findByRegistrationNumber(registrationNumber));
-		} catch (ResourceNotFoundException e) {
+			
+			family_=familyL.findByRegistrationNumber(registrationNumber);
+			//	return ResponseEntity.ok().body(family_);
+			if(family_==null)
+				family_=new Family_DetailsDTO();
+			UtilityController.getFamily(family_);
+			return ResponseEntity.ok().body(family_);
+		
+		} 
+		catch (ResourceNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			if(family_==null)
+				family_=new Family_DetailsDTO();
+		
+		UtilityController.getFamily(family_);
+		return ResponseEntity.ok().body(family_);
 		}
-		return ResponseEntity.badRequest().body(new Family_DetailsDTO());
+	//	return ResponseEntity.badRequest().body(new Family_DetailsDTO());
+		
 		
 	}
 	@PostMapping("/addFamily")

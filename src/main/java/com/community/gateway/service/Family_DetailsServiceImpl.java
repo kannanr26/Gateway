@@ -52,8 +52,9 @@ public class Family_DetailsServiceImpl implements Family_DetailsService {
 	@Override
 	public Family_Details findByRegistrationNumber(@Valid String registrationNumber) throws ResourceNotFoundException {
 		// TODO Auto-generated method stub
-		Family_Details family_details = family_detailsRepository.findByRegistrationNumber(registrationNumber).orElseThrow(
-				() -> new ResourceNotFoundException("Family Details not found for this registrationNumber :: " + registrationNumber));
+		Family_Details family_details = family_detailsRepository.findByRegistrationNumber(registrationNumber).orElse(
+				//() -> new ResourceNotFoundException("Family Details not found for this registrationNumber :: " + registrationNumber)
+				 null );
 		return family_details;
 	}
 }

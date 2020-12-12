@@ -1,23 +1,12 @@
-/**
- *
- */
 package com.community.gateway.model;
-
-import javax.persistence.Basic;
-import javax.validation.constraints.Size;
 
 /**
  * @author deepikamalar
  * Role will be assigned only the person who  
  */
 
-
 import lombok.Data;
-
 import javax.persistence.*;
-
-import com.community.gateway.model.e_num.EOperator;
-import com.community.gateway.model.e_num.ERole;
 
 @Entity
 @Table(name = "OPERATOR")
@@ -42,7 +31,10 @@ public class Operator {
 	@Column(name = "CREATED_TIMESTAMP")
 	private java.util.Date createdTimestamp;
 
-	@Enumerated(EnumType.ORDINAL)
-	private ERole role;
+	@OneToOne(fetch = FetchType.EAGER)
+	private Role role;
+	
+	@OneToOne(fetch = FetchType.EAGER)
+	private OperatorType operatorType;
 
 }

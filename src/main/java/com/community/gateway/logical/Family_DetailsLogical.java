@@ -3,12 +3,8 @@ package com.community.gateway.logical;
 import java.util.List;
 
 import javax.validation.Valid;
-
-import org.springframework.http.ResponseEntity;
-
 import com.community.gateway.dto.Family_DetailsDTO;
 import com.community.gateway.exception.ResourceNotFoundException;
-import com.community.gateway.jwt.response.MessageResponse;
 
 public interface Family_DetailsLogical {
 
